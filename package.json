@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "Provides a component for rendering openmrs forms. However it is generic enough for use outside openmrs",
   "repository": {
-    "url": "https://github.com/preboot/angular2-library-seed"
+    "url": "https://github.com/AMPATH/ng2-opemmrs-formentry"
   },
   "license": "MIT",
   "scripts": {
