@@ -1,15 +1,14 @@
-[![Angular 2 Style Guide](https://mgechev.github.io/angular2-style-guide/images/badge.svg)](https://github.com/mgechev/angular2-style-guide)
+[![Build Status](https://travis-ci.org/AMPATH/ng2-opemmrs-formentry.svg?branch=master)](https://travis-ci.org/AMPATH/ng2-opemmrs-formentry)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
-[![Dependency Status](https://david-dm.org/preboot/angular2-library-seed/status.svg)](https://david-dm.org/preboot/angular2-library-seed#info=dependencies) [![devDependency Status](https://david-dm.org/preboot/angular2-library-seed/dev-status.svg)](https://david-dm.org/preboot/angular2-webpack#info=devDependencies)
 
-## Create an Angular 2 Library Now
+## Angular 2 openmrs formentry
 
 ### Quick Start
 
-* [Download zip of library](https://github.com/preboot/angular2-library-seed/archive/master.zip)
+* CLone the repo
 
 ```bash
-$ cd path/to/unzip/folder
+$ cd ng2-opemmrs-formentry
 
 $ npm install
 
@@ -18,18 +17,11 @@ $ npm start
 ```
 go to [http://localhost:8080](http://localhost:8080) in your browser.
 
-### Now get to work making your library.
+### Now get to work adding your awesome feature.
 
 #### Overview
 
-A simple straight-forward seed for creating Angular 2 Libraries.
-
-* Quick start with one sample of each already created (with tests): [Component](https://github.com/preboot/angular2-library-seed/blob/master/src/app/components/sample.component.ts), [Directive](https://github.com/preboot/angular2-library-seed/blob/master/src/app/directives/sample.directive.ts), [Pipe](https://github.com/preboot/angular2-library-seed/blob/master/src/app/pipes/sample.pipe.ts) and [Service](https://github.com/preboot/angular2-library-seed/blob/master/src/app/services/sample.service.ts)
-* Uses [Webpack](http://webpack.github.io/) to demo your library.
-* Testing Angular 2 code with [Jasmine](http://jasmine.github.io/) and [Karma](http://karma-runner.github.io/).
-* End-to-end Angular 2 code using [Protractor](https://angular.github.io/protractor/).
-* Error reported with [TSLint](http://palantir.github.io/tslint/).
-* Documentation with [TypeDoc](http://typedoc.io/).
+An angular library for openmrs formentry
 
 #### Table of Contents
 
