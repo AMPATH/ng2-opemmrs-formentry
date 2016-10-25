@@ -6,7 +6,7 @@ import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@ang
 import { TextInputQuestion } from './models/text-input-question';
 import { QuestionGroup } from './models/question-group';
 import { RepeatingQuestion } from './models/repeating-question'
-describe('SampleService', () => {
+describe('ControlGroupService', () => {
     let injector: Injector;
     let controlGroupService: ControlGroupService;
     let data = {
@@ -165,7 +165,6 @@ describe('SampleService', () => {
 
     it('is defined', () => {
         expect(ControlGroupService).toBeDefined();
-        expect(controlGroupService).toBeDefined();
         expect(controlGroupService instanceof ControlGroupService).toBeTruthy();
     });
 
