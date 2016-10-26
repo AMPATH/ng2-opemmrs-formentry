@@ -35,7 +35,7 @@ module.exports = function makeWebpackConfig() {
    */
   if (isProd) {
     config.devtool = 'source-map';
-  } 
+  }
   else if (isTest) {
     config.devtool = 'inline-source-map';
   }
@@ -86,7 +86,7 @@ module.exports = function makeWebpackConfig() {
   if (isTest && !isTestWatch) {
     // awesome-typescript-loader needs to output inlineSourceMap for code coverage to work with source maps.
     atlOptions = 'inlineSourceMap=true&sourceMap=false';
-  } 
+  }
 
   /**
    * Loaders
@@ -95,8 +95,9 @@ module.exports = function makeWebpackConfig() {
    * This handles most of the magic responsible for converting modules
    */
   config.module = {
-    preLoaders: isTest ? [] : [{test: /\.ts$/, loader: 'tslint'}],
+    preLoaders: isTest ? [] : [{ test: /\.ts$/, loader: 'tslint' }],
     loaders: [
+      { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
       // Support for .ts files.
       {
         test: /\.ts$/,
@@ -111,7 +112,7 @@ module.exports = function makeWebpackConfig() {
       },
 
       // Support for *.json files.
-      {test: /\.json$/, loader: 'json'},
+      { test: /\.json$/, loader: 'json' },
 
       // Support for CSS as raw text
       // use 'null' loader in test mode (https://github.com/webpack/null-loader)
@@ -122,7 +123,7 @@ module.exports = function makeWebpackConfig() {
         loader: isTest ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')
       },
       // all css required in src/app files will be merged in js files
-      {test: /\.css$/, include: root('src', 'app'), loader: 'raw!postcss'},
+      { test: /\.css$/, include: root('src', 'app'), loader: 'raw!postcss' },
 
       // support for .scss files
       // use 'null' loader in test mode (https://github.com/webpack/null-loader)
@@ -133,11 +134,11 @@ module.exports = function makeWebpackConfig() {
         loader: isTest ? 'null' : ExtractTextPlugin.extract('style', 'css?sourceMap!postcss!sass')
       },
       // all css required in src/app files will be merged in js files
-      {test: /\.scss$/, exclude: root('src', 'style'), loader: 'raw!postcss!sass'},
+      { test: /\.scss$/, exclude: root('src', 'style'), loader: 'raw!postcss!sass' },
 
       // support for .html as raw text
       // todo: change the loader to something that adds a hash to images
-      {test: /\.html$/, loader: 'raw',  exclude: root('src', 'public')}
+      { test: /\.html$/, loader: 'raw', exclude: root('src', 'public') }
     ],
     postLoaders: []
   };
@@ -169,7 +170,7 @@ module.exports = function makeWebpackConfig() {
   ];
 
   if (!isTest && !isProd) {
-      config.plugins.push(new DashboardPlugin());
+    config.plugins.push(new DashboardPlugin());
   }
 
   if (!isTest) {
@@ -193,7 +194,7 @@ module.exports = function makeWebpackConfig() {
       // Extract css files
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin('css/[name].[hash].css', {disable: !isProd})
+      new ExtractTextPlugin('css/[name].[hash].css', { disable: !isProd })
     );
   }
 
@@ -210,7 +211,7 @@ module.exports = function makeWebpackConfig() {
 
       // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
       // Minify all javascript, switch loaders to minimizing mode
-      new webpack.optimize.UglifyJsPlugin({mangle: { keep_fnames: true }}),
+      new webpack.optimize.UglifyJsPlugin({ mangle: { keep_fnames: true } }),
 
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin
@@ -262,7 +263,7 @@ module.exports = function makeWebpackConfig() {
   };
 
   return config;
-}();
+} ();
 
 // Helper functions
 function root(args) {
