@@ -1,12 +1,4 @@
-import { TestBed } from '@angular/core/testing';
-import { TextInputQuestion } from "../question-models/text-input-question";
-import { TextAreaInputQuestion } from "../question-models/text-area-input-question";
-import { SelectQuestion } from "../question-models/select-question";
-import { DateQuestion } from "../question-models/date-question";
-import { MultiSelectQuestion } from "../question-models/multi-select-question";
-import { QuestionGroup } from "../question-models/group-question";
-import { RepeatingQuestion } from "../question-models/repeating-question";
-import { QuestionFactory } from "./question.factory";
+import { QuestionFactory } from './question.factory';
 
 describe('Question Factory', () => {
 
@@ -46,16 +38,16 @@ describe('Question Factory', () => {
     };
 
     let numberSchemaQuestion: any = {
-        label: "mg",
+        label: 'mg',
         questionOptions: {
-            concept: "a8a063c8-1350-11df-a1f1-0026b9348838",
-            max: "1000",
-            min: "0",
-            rendering: "number"
+            concept: 'a8a063c8-1350-11df-a1f1-0026b9348838',
+            max: '1000',
+            min: '0',
+            rendering: 'number'
         },
         validators: [],
         hide: {
-            hideWhenExpression: "MothersArvUse !== 'a89aadc0-1350-11df-a1f1-0026b9348838'"
+            hideWhenExpression: 'MothersArvUse !== "a89aadc0-1350-11df-a1f1-0026b9348838"'
         }
     };
 
@@ -75,7 +67,8 @@ describe('Question Factory', () => {
             },
             {
                 type: 'js_expression',
-                failsWhenExpression: '(new moment(encDate)).isBefore((new moment(myValue)), "day") || (new moment(encDate)).isSame((new moment(myValue)), "day")',
+                failsWhenExpression: '(new moment(encDate)).isBefore((new moment(myValue)), "day")'
+                + '||(new moment(encDate)).isSame((new moment(myValue)),"day")',
                 message: 'Date should be before the encounter date.'
             }
         ]
@@ -229,15 +222,6 @@ describe('Question Factory', () => {
         }
     };
 
-    let problemSchemaQuestion: any = {
-        label: 'Reason for hospitalization:',
-        questionOptions: {
-            concept: 'a8a07a48-1350-11df-a1f1-0026b9348838',
-            rendering: 'problem'
-        },
-        type: 'obs'
-    };
-
     let encounterProviderSchemaQuestion: any = {
         type: 'encounterProvider',
         label: 'Provider',
@@ -257,7 +241,7 @@ describe('Question Factory', () => {
         questionOptions: {
             rendering: 'ui-select-extended'
         }
-    }
+    };
 
     let formSchema: any = {
         name: 'triage',
@@ -561,7 +545,7 @@ describe('Question Factory', () => {
             }
             ]
         }]
-    }
+    };
 
     let factory = new QuestionFactory();
 
@@ -592,6 +576,14 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(numberSchemaQuestion.label);
         expect(converted.key).toEqual(numberSchemaQuestion.id);
         expect(converted.type).toEqual('number');
+
+    });
+
+    it('should convert schema text question to Text question model', () => {
+        let converted = factory.toTextQuestion(textSchemaQuestion);
+        expect(converted.label).toEqual(textSchemaQuestion.label);
+        expect(converted.key).toEqual(textSchemaQuestion.id);
+        expect(converted.type).toEqual('text');
 
     });
 
@@ -689,4 +681,4 @@ describe('Question Factory', () => {
 
     });
 
-})
+});
