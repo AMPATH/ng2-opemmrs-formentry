@@ -22,8 +22,17 @@ import { QuestionBase } from './question-models/question-base';
                     (ngModelChange)="onValueChange($event)"
                     [id]="question.key + 'id'">
                     <option *ngFor="let o of question.options" [value]="o.value">{{o.label}}</option>
-                </select>
-
+                </select>  
+               
+              <ng-select
+                    *ngSwitchCase="'multi-select'"
+                    [formControlName]="question.key"
+                    (ngModelChange)="onValueChange($event)"
+                    [options]="question.options"
+                    [multiple]="true"
+                    [id]="question.key + 'id'">
+                </ng-select>
+                
                 <textarea
                     class="form-control"
                     *ngSwitchCase="'textarea'"
@@ -36,6 +45,7 @@ import { QuestionBase } from './question-models/question-base';
                     form: getForm(question.key)}">
                   </fe-question>
                 </div>
+            
 
                 <div class='well' *ngSwitchCase="'repeating'">
                 <button class='btn btn-primary' (click)="addRepeating(question)">Add</button>

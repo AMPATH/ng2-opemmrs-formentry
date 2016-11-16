@@ -5,8 +5,9 @@ import { FormEntryComponent } from './form-entry.component';
 import { QuestionComponent } from './question.component';
 import { FormControlService } from './form-control.service';
 import { FormBuilder } from '@angular/forms';
+import { SelectModule } from '../components/select';
 @NgModule({
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,SelectModule],
   declarations: [FormEntryComponent, QuestionComponent],
   providers: [FormBuilder, FormControlService],
   exports: [FormEntryComponent]
