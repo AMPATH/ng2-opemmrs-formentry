@@ -22,7 +22,7 @@
     "test": "karma start",
     "posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
     "test-watch": "karma start --no-single-run --auto-watch",
-    "ci": "npm run e2e && npm run test",
+    "ci": "npm run pretest && npm run e2e && npm run test",
     "docs": "typedoc --options typedoc.json src/app/app.component.ts",
     "start": "npm run server",
     "start:hmr": "npm run server -- --hot",
@@ -41,8 +41,11 @@
     "core-js": "^2.4.1",
     "expose-loader": "^0.7.1",
     "jquery": "^3.1.1",
+    "ng2-semantic-ui": "^0.4.7",
+    "owl.carousel": "^2.2.0",
     "reflect-metadata": "^0.1.3",
     "rxjs": "5.0.0-rc.1",
+    "slick-carousel": "^1.6.0",
     "zone.js": "^0.6.21"
   },
   "devDependencies": {
