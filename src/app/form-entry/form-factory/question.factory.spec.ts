@@ -22,7 +22,14 @@ describe('Question Factory', () => {
                 }
             ],
             rendering: 'select'
+        },
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
+
     };
 
     let numericSchemaQuestion: any = {
@@ -35,6 +42,9 @@ describe('Question Factory', () => {
             answers: []
         },
         validators: [],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
         hide: {
             hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
@@ -49,8 +59,11 @@ describe('Question Factory', () => {
             rendering: 'number'
         },
         validators: [],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
         hide: {
-            hideWhenExpression: 'MothersArvUse !== "a89aadc0-1350-11df-a1f1-0026b9348838"'
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -74,7 +87,13 @@ describe('Question Factory', () => {
                 ' || (new moment(encDate)).isSame((new moment(myValue)), "day")',
                 message: 'Date should be before the encounter date.'
             }
-        ]
+        ],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
+        }
     };
 
     let multiCheckboxSchemaQuestion: any = {
@@ -96,8 +115,11 @@ describe('Question Factory', () => {
         },
         type: 'obs',
         validators: [],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
         hide: {
-            hideWhenExpression: 'onArt !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -119,7 +141,13 @@ describe('Question Factory', () => {
                     rows: 18
                 }
             }
-        ]
+        ],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
+        }
     };
 
     let drugSchemaQuestion: any = {
@@ -129,6 +157,12 @@ describe('Question Factory', () => {
         required: 'true',
         questionOptions: {
             rendering: 'ui-select-extended'
+        },
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -155,7 +189,13 @@ describe('Question Factory', () => {
                     }
                 ]
             }
-        ]
+        ],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
+        }
     };
     let groupSchemaQuestion: any = {
         type: 'obsGroup',
@@ -201,7 +241,13 @@ describe('Question Factory', () => {
                     hideWhenExpression: 'artEligibleNotStarted !== "a8aaf3e2-1350 - 11df-a1f1 - 0026b9348838"'
                 }
             }
-        ]
+        ],
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
+        }
     };
 
     let personAttributeSchemaQuestion: any = {
@@ -213,6 +259,12 @@ describe('Question Factory', () => {
         questionOptions: {
             rendering: 'ui-select-extended',
             attributeType: '8d87236c-c2cc-11de-8d13-0010c6dffd0f'
+        },
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -224,6 +276,12 @@ describe('Question Factory', () => {
         default: '',
         questionOptions: {
             rendering: 'ui-select-extended'
+        },
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -234,6 +292,12 @@ describe('Question Factory', () => {
         required: 'true',
         questionOptions: {
             rendering: 'ui-select-extended'
+        },
+        disable: {
+            disableWhenExpression: 'onArt !== "a899b35c-1350-11df-a1f1-0026b9348838"'
+        },
+        hide: {
+            hideWhenExpression: 'NewbornProhpArv !== "a899b35c-1350 - 11df-a1f1 - 0026b9348838"'
         }
     };
 
@@ -554,7 +618,8 @@ describe('Question Factory', () => {
         }));
         expect(converted.renderingType).toEqual(selectSchemaQuestion.questionOptions.rendering);
         expect(converted.key).toEqual(selectSchemaQuestion.id);
-
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
     });
 
     it('should convert schema numeric question to Numeric question model', () => {
@@ -562,6 +627,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(numericSchemaQuestion.label);
         expect(converted.key).toEqual(numericSchemaQuestion.id);
         expect(converted.renderingType).toEqual('number');
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -570,6 +637,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(numberSchemaQuestion.label);
         expect(converted.key).toEqual(numberSchemaQuestion.id);
         expect(converted.renderingType).toEqual('number');
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -578,6 +647,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(dateSchemaQuestion.label);
         expect(converted.key).toEqual(dateSchemaQuestion.id);
         expect(converted.renderingType).toEqual('date');
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -592,6 +663,8 @@ describe('Question Factory', () => {
             };
         }));
         expect(converted.renderingType).toEqual('multi-select');
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -601,6 +674,8 @@ describe('Question Factory', () => {
         expect(converted.key).toEqual(textAreaSchemaQuestion.id);
         expect(converted.isExpanded).toEqual(textAreaSchemaQuestion.isExpanded);
         expect(converted.rows).toEqual(textAreaSchemaQuestion.questionOptions.rows);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -609,6 +684,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(drugSchemaQuestion.label);
         expect(converted.key).toEqual(drugSchemaQuestion.id);
         expect(converted.renderingType).toEqual(drugSchemaQuestion.type);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -616,6 +693,8 @@ describe('Question Factory', () => {
         let converted = factory.toGroupQuestion(groupSchemaQuestion);
         expect(converted.label).toEqual(groupSchemaQuestion.label);
         expect(converted.questions).toEqual(groupSchemaQuestion.questions);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -623,6 +702,8 @@ describe('Question Factory', () => {
         let converted = factory.toRepeatingQuestion(repeatingGroupSchemaQuestion);
         expect(converted.label).toEqual(repeatingGroupSchemaQuestion.label);
         expect(converted.questions).toEqual(repeatingGroupSchemaQuestion.questions);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -631,6 +712,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(personAttributeSchemaQuestion.label);
         expect(converted.key).toEqual(personAttributeSchemaQuestion.id);
         expect(converted.renderingType).toEqual(personAttributeSchemaQuestion.type);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -639,6 +722,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(encounterProviderSchemaQuestion.label);
         expect(converted.key).toEqual(encounterProviderSchemaQuestion.id);
         expect(converted.renderingType).toEqual(encounterProviderSchemaQuestion.type);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 
@@ -647,6 +732,8 @@ describe('Question Factory', () => {
         expect(converted.label).toEqual(encounterLocationSchemaQuestion.label);
         expect(converted.key).toEqual(encounterLocationSchemaQuestion.id);
         expect(converted.renderingType).toEqual(encounterLocationSchemaQuestion.type);
+        expect(converted.disable).toEqual(selectSchemaQuestion.disable);
+        expect(converted.hide).toEqual(selectSchemaQuestion.hide);
 
     });
 

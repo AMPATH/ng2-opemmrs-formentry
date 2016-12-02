@@ -34,6 +34,8 @@ export class QuestionFactory {
         });
         question.renderingType = schemaQuestion.questionOptions.rendering;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -51,6 +53,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = 'number';
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -68,6 +72,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = 'number';
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -83,6 +89,8 @@ export class QuestionFactory {
         let question = new DateQuestion({ type: '', key: '' });
         question.renderingType = 'date';
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -99,6 +107,8 @@ export class QuestionFactory {
         question.label = schemaQuestion.label;
         question.key = schemaQuestion.id;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -121,6 +131,8 @@ export class QuestionFactory {
             };
         });
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -139,6 +151,8 @@ export class QuestionFactory {
         question.isExpanded = schemaQuestion.isExpanded;
         question.rows = schemaQuestion.questionOptions.rows;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -156,6 +170,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = 'text';
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -173,6 +189,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = schemaQuestion.type;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -190,6 +208,8 @@ export class QuestionFactory {
         question.questions = schemaQuestion.questions;
         question.key = schemaQuestion.id;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -207,6 +227,8 @@ export class QuestionFactory {
         question.questions = schemaQuestion.questions;
         question.key = schemaQuestion.id;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -265,6 +287,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = schemaQuestion.type;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -287,6 +311,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = schemaQuestion.type;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
@@ -309,6 +335,8 @@ export class QuestionFactory {
         question.key = schemaQuestion.id;
         question.renderingType = schemaQuestion.type;
         question.validators = this.addValidators(schemaQuestion);
+        question.disable = schemaQuestion.disable;
+        question.hide = schemaQuestion.hide;
 
         let mappings: any = {
             label: 'label',
