@@ -12,7 +12,7 @@ export class HistoricalHelperService {
 
   public evaluate(expr: string): any {
 
-    this.functions.forEach((v) => {
+    _.each(this.functions, (v) => {
 
       if (expr.indexOf(v) !== -1 ) {
         expr = expr.replace(new RegExp(v, 'g'), 'this.' + v);
@@ -25,20 +25,36 @@ export class HistoricalHelperService {
     return eval(expr);
   }
 
-  public setValue() {
+  public arrayContains(array: Array<>, members: any) {
+
+    return this.contains(array, members, true);
 
   }
 
-  public getDisplayValue() {
+  public arrayContainsAny(array: Array<>, members: any) {
+
+    return this.contains(array, members, false);
 
   }
 
-  public arrayContains() {
+  private contains(array: Array<>, members: any, _contains: boolean) {
 
-  }
-
-  public arrayContainsAny() {
-
+    if (_.isArray(members)) {
+      if (members.length === 0) {
+        return true;
+      }
+      let contains = _contains;
+      _.each(members, (val) => {
+        if (array.indexOf(val) === -1) {
+          contains = false;
+        }else {
+          contains = true;
+        }
+      });
+      return contains;
+    } else {
+      return array.indexOf(members) !== -1;
+    }
   }
 
   public getClassMethods(obj) {
