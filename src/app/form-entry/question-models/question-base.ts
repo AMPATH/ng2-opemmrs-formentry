@@ -5,7 +5,6 @@ import { ValidationModel } from './validation.model';
 export class QuestionBase {
     key: string;
     label?: string;
-    value: any;
     renderingType: string;
 
     defaultValue?: any;
@@ -24,7 +23,6 @@ export class QuestionBase {
         this.defaultValue = options.defaultValue;
         this.originalValue = options.originalValue;
         this.extras = options.extras;
-        this.value = options.value;
         this.renderingType = options.type;
         this.key = options.key || '';
         this.label = options.label || '';

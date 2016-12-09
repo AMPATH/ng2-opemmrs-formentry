@@ -3,7 +3,6 @@ import { ValidationModel } from '../validation.model';
 export interface BaseOptions {
     defaultValue?: any;
     originalValue?: any;
-    value?: any;
     type: string;
     key: string;
     label?: string;
