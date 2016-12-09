@@ -7,10 +7,14 @@ import { FormBuilder } from '@angular/forms';
 import { FormRendererComponent } from './form-renderer/form-renderer.component';
 import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { OwlCarouselComponent } from '../components/owl-carousel';
+import { HistoricalValueDirective } from './directives/historical-value-directive';
+import { HistoricalDataService } from './services/historical-data-service.mock';
+import { HistoricalFieldHelperService } from './services/historical-field-helper-service';
+
 @NgModule({
     imports: [CommonModule, ReactiveFormsModule],
-    declarations: [FormRendererComponent, OwlCarouselComponent],
-    providers: [FormBuilder, FormControlService, ValidationFactory],
+    declarations: [FormRendererComponent, OwlCarouselComponent, HistoricalValueDirective],
+    providers: [FormBuilder, FormControlService, ValidationFactory, HistoricalDataService, HistoricalFieldHelperService],
     exports: [FormRendererComponent]
 })
 export class FormEntryModule {
