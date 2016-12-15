@@ -1,7 +1,7 @@
-import {Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Directive, HostListener, Input, Output, EventEmitter } from '@angular/core';
 
 import { QuestionBase } from '../question-models/question-base';
-import { HistoricalFieldHelperService } from '../services/historical-field-helper-service';
+import { HistoricalFieldHelperService } from '../helpers/historical-field-helper-service';
 import  *  as _  from 'lodash';
 
 @Directive({
@@ -44,12 +44,14 @@ export class HistoricalValueDirective {
 
       if (this.question.hasOwnProperty('hasHistoricalValue')) {
 
-        if (this.question.renderingType === 'select' && !_.isUndefined(this.question.originalValue)) {
+        if ((this.question.renderingType === 'select'
+          || this.question.renderingType === 'multi-select')
+          && !_.isUndefined(this.question.originalValue)) {
 
           this.question['historicalDisplay'] = this.historicalFieldHelper.getDisplayTextFromOptions(
             this.question.options,
             'value',
-            this.question.originalValue.value,
+            this.question.originalValue,
             'label'
           );
 
