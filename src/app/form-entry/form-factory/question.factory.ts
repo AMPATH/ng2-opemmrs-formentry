@@ -458,7 +458,7 @@ export class QuestionFactory {
       let helper = new HistoricalHelperService();
       let origValue = helper.evaluate(schemaQuestion.historicalExpression);
 
-      question.originalValue = origValue;
+      question['historicalDataValue'] = origValue;
       if (schemaQuestion.historicalPrepopulate) {
 
         question.defaultValue = origValue;
