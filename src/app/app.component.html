@@ -5,4 +5,9 @@
 			<button type="submit" [disabled]="!form.rootNode.control.valid">Save</button>
 		</div>
 	</form>
+	<button kendoButton (click)="onButtonClick()" [primary]="true" [icon]="'refresh'">Primary Button</button>
+	<div>
+		<kendo-combobox [data]="listItems" [allowCustom]="allowCustom">
+		</kendo-combobox>
+	</div>
 </div>

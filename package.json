@@ -37,16 +37,19 @@
     "@angular/platform-browser": "~2.2.0",
     "@angular/platform-browser-dynamic": "~2.2.0",
     "@angular/router": "~3.2.0",
+    "@progress/kendo-angular-buttons": "^0.14.2",
+    "@progress/kendo-angular-dropdowns": "^0.20.1",
+    "@telerik/kendo-theme-default": "^1.32.1",
     "@types/lodash": "^4.14.37",
     "core-js": "^2.4.1",
     "expose-loader": "^0.7.1",
     "jquery": "^3.1.1",
-    "reflect-metadata": "^0.1.8",
-    "rxjs": "5.0.0-rc.1",
-    "zone.js": "^0.6.25",
     "ng2-semantic-ui": "^0.4.7",
     "owl.carousel": "^2.2.0",
-    "slick-carousel": "^1.6.0"
+    "reflect-metadata": "^0.1.8",
+    "rxjs": "5.0.0-rc.1",
+    "slick-carousel": "^1.6.0",
+    "zone.js": "^0.6.25"
   },
   "devDependencies": {
     "@angularclass/hmr": "^1.0.1",

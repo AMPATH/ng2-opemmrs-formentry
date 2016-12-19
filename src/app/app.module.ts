@@ -11,12 +11,19 @@ import { FormFactory } from './form-entry/form-factory/form.factory';
 // import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormSchemaCompiler } from './form-entry/services/form-schema-compiler.service';
+
+// Import ButtonsModule
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
     ReactiveFormsModule,
-    FormEntryModule
+    FormEntryModule,
+    ButtonsModule,
+    DropDownsModule
   ],
   declarations: [
     AppComponent

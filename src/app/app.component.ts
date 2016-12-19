@@ -26,6 +26,7 @@ export class AppComponent {
     formGroup: FormGroup;
     activeTab = 0;
     form: Form;
+    public listItems: Array<string> = ['X-Small', 'Small', 'Medium', 'Large', 'X-Large', '2X-Large'];
     constructor(private questionFactory: QuestionFactory, private formFactory: FormFactory) {
         // Do stuff
         console.log(adultForm);
@@ -33,6 +34,11 @@ export class AppComponent {
         // this.sections = this.createSections(adultForm);
         this.createForm();
     }
+
+    onButtonClick() {
+        console.log('click');
+    }
+
     createSections(formSchema) {
         let sections = {};
         for (let page of formSchema.pages) {
