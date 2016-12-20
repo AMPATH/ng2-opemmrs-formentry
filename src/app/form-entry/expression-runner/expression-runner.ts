@@ -6,11 +6,11 @@ export class ExpressionRunner {
         let runner = this;
         let runnable: Runnable = {
             run: () => {
-
+                return true;
                 /* tslint:disable */
                 let scope: any = {};
 
-                if(control instanceof AfeFormArray ||
+                if (control instanceof AfeFormArray ||
                     control instanceof AfeFormControl ||
                     control instanceof AfeFormGroup) {
 
@@ -42,21 +42,22 @@ export class ExpressionRunner {
     }
 
     private getControlRelationValueString(control: AfeFormArray | AfeFormGroup | AfeFormControl, scope?: any) {
+        if (control && control.controlRelations && control.controlRelations.relations) {
+            control.controlRelations.relations.forEach(relation => {
+                if (relation.relatedTo instanceof AfeFormArray ||
+                    relation.relatedTo instanceof AfeFormControl ||
+                    relation.relatedTo instanceof AfeFormGroup) {
+                    let related = relation.relatedTo as any;
+                    let relatedAsControl = relation.relatedTo as AbstractControl;
+                    if (relatedAsControl && Array.isArray(relatedAsControl.value)) {
+                        scope[related.uuid] = relation.relatedTo.value;
+                    } else {
+                        scope[related.uuid] = relation.relatedTo.value;
+                    }
+                }
 
-          control.controlRelations.relations.forEach(relation => {
-            if (relation.relatedTo instanceof AfeFormArray ||
-              relation.relatedTo instanceof AfeFormControl ||
-              relation.relatedTo instanceof AfeFormGroup) {
-              let related = relation.relatedTo as any;
-              let relatedAsControl = relation.relatedTo as AbstractControl;
-              if (relatedAsControl && Array.isArray(relatedAsControl.value)) {
-                scope[related.uuid] = relation.relatedTo.value;
-              } else {
-                scope[related.uuid] = relation.relatedTo.value;
-              }
-            }
-
-          });
+            });
+        }
     }
 
     private getHelperMethods(obj: any, scope?: any) {
