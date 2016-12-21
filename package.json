@@ -42,7 +42,6 @@
     "expose-loader": "^0.7.1",
     "jquery": "^3.1.1",
     "ng2-semantic-ui": "^0.4.7",
-    "owl.carousel": "^2.2.0",
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-rc.1",
     "slick-carousel": "^1.6.0",
