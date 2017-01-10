@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Form } from '../form-factory/form';
-import { ValueAdapter } from './interfaces/value.adapter';
+import { ValueAdapter } from './value.adapter';
 import * as _ from 'lodash';
 @Injectable()
 export class OrderValueAdapter implements ValueAdapter {
     formOrderNodes = [];
     existingOrders = [];
-    provider = '';
+    private provider = '';
 
     generateFormPayload(form: Form) {
         this.formOrderNodes = [];
@@ -26,7 +26,6 @@ export class OrderValueAdapter implements ValueAdapter {
         if (form.valueProcessingInfo.providerUuid) {
             this.provider = form.valueProcessingInfo.providerUuid;
         }
-
     }
 
     private _createOrdersPayload(orderNodes) {

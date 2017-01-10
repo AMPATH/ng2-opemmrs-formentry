@@ -4,9 +4,8 @@ import { FormGroup } from '@angular/forms';
 
 import { Form } from './form-entry/form-factory/form';
 import { FormFactory } from './form-entry/form-factory/form.factory';
-import { ObsPayloadFactoryService } from './form-entry/services/obs-payload-factory.service';
 import { MockObs } from './mock/mock-obs';
-import { OrderValueAdapter } from './form-entry/value-adapters';
+import { ObsValueAdapter, OrderValueAdapter, EncounterAdapter } from './form-entry/value-adapters';
 
 const adultForm = require('./adult');
 const adultFormObs = require('./mock/obs');
@@ -33,21 +32,24 @@ export class AppComponent implements OnInit {
     activeTab = 0;
     form: Form;
     stack = [];
-    constructor(private questionFactory: QuestionFactory, private formFactory: FormFactory, private obsFactory: ObsPayloadFactoryService,
-        private orderAdaptor: OrderValueAdapter) {
+    constructor(private questionFactory: QuestionFactory, private formFactory: FormFactory, private obsValueAdapater: ObsValueAdapter,
+        private orderAdaptor: OrderValueAdapter, private encAdapter: EncounterAdapter) {
         this.schema = adultForm;
         this.createForm();
     }
     ngOnInit() {
-        // Traverse  to get all nodes
-        let pages = this.obsFactory.traverse(this.form.rootNode);
-        // Extract actual question nodes
-        let questionNodes = this.obsFactory.getQuestionNodes(pages);
-        // Extract set obs
-        this.obsFactory.setValues(questionNodes, adultFormObs.obs);
 
-        // Traverse to get  orders' nodes
-        this.orderAdaptor.populateForm(this.form, formOrdersPayload);
+        // Set encounter, obs, orders
+
+        adultFormObs.orders = formOrdersPayload.orders;
+        this.encAdapter.populateForm(this.form, adultFormObs);
+
+        // Alternative is to set individually for obs and orders as show below
+        // // Set obs
+        // this.obsValueAdapater.populateForm(this.form, adultFormObs.obs);
+
+        // // Set orders
+        // this.orderAdaptor.populateForm(this.form, formOrdersPayload);
 
     }
 
@@ -72,28 +74,37 @@ export class AppComponent implements OnInit {
 
         $event.preventDefault();
 
+        // Set valueProcessingInfo
+        this.form.valueProcessingInfo = {
+            patientUuid: 'patientUuid',
+            visitUuid: 'visitUuid',
+            encounterTypeUuid: 'encounterTypeUuid',
+            formUuid: 'formUuid',
+            encounterUuid: 'encounterUuid',
+            providerUuid: 'providerUuid',
+            utcOffset: '+0300'
+        };
+
+        let payload = this.encAdapter.generateFormPayload(this.form);
+        console.log('encounter payload', payload);
+
         if (this.form.valid) {
 
-            // Traverse  to get all nodes
-            let pages = this.obsFactory.traverse(this.form.rootNode);
-            // Extract actual question nodes
-            let questionNodes = this.obsFactory.getQuestionNodes(pages);
-            // Get obs Payload
-            let payload = this.obsFactory.getObsPayload(questionNodes);
-            console.log(payload);
-            // Assign a provider to be used as orderer
-            this.orderAdaptor.setOrderProvider('provider-uuid');
+            let payload = this.encAdapter.generateFormPayload(this.form);
+            console.log('encounter payload', payload);
 
-            // generate payload
-            let ordersPayload = this.orderAdaptor.generateFormPayload(this.form);
-            console.log('orders Payload', ordersPayload);
+            // Alternative is to populate for each as shown below
+            // // generate obs payload
+            // let payload = this.obsValueAdapater.generateFormPayload(this.form);
+            // console.log('obs payload', payload);
+
+            // // generate orders payload
+            // let ordersPayload = this.orderAdaptor.generateFormPayload(this.form);
+            // console.log('orders Payload', ordersPayload);
 
         } else {
 
             this.form.markInvalidControls(this.form.rootNode);
         }
-    }
-
-    getPayLoad() {
     }
 }

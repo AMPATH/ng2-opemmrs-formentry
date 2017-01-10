@@ -9,9 +9,13 @@ import { HidersDisablersFactory } from '../form-factory/hiders-disablers.factory
 import { JsExpressionHelper } from '../helpers/js-expression-helper';
 import { QuestionFactory } from '../form-factory/question.factory';
 import { ControlRelationsFactory } from '../form-factory/control-relations.factory';
-import { NodeBase } from '../form-factory/form-node';
+import { NodeBase, ArrayNode, LeafNode } from '../form-factory/form-node';
+
+import { OrderValueAdapter, ObsValueAdapter } from '.';
 
 const adultForm = require('../../adult');
+const adultFormOrders = require('../../mock/orders');
+const adultFormObs = require('../../mock/obs');
 const moment = require('moment');
 
 describe('Encounter Value Adapter:', () => {
@@ -20,6 +24,8 @@ describe('Encounter Value Adapter:', () => {
         adultFormSchema = JSON.parse(JSON.stringify(adultForm));
         TestBed.configureTestingModule({
             providers: [
+                OrderValueAdapter,
+                ObsValueAdapter,
                 FormFactory,
                 FormControlService,
                 ValidationFactory,
@@ -28,7 +34,8 @@ describe('Encounter Value Adapter:', () => {
                 ExpressionRunner,
                 JsExpressionHelper,
                 QuestionFactory,
-                ControlRelationsFactory
+                ControlRelationsFactory,
+
             ]
         });
     });
@@ -80,18 +87,15 @@ describe('Encounter Value Adapter:', () => {
                 uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
                 display: 'Location Test'
             },
-            obs: [],
-            orders: [],
+            obs: adultFormObs.obs,
+            orders: adultFormOrders.orders,
             patient: {
                 uuid: 'patient-uuid',
                 identifiers: []
             },
             provider: {
                 uuid: 'ef59ac9d-9cca-46c5-ab04-b4d708584e13',
-                display: 'Florida Jepngetich Kiplagat',
-                person: {
-                    uuid: 'person-provider-uuid'
-                }
+                display: 'Florida Jepngetich Kiplagat'
             },
             uuid: '3841e9e6-b6cb-4667-b495-89331c6a973a'
         };
@@ -106,12 +110,20 @@ describe('Encounter Value Adapter:', () => {
         expect(nodes[0].initialValue).toEqual(moment('2016-12-14T11:26:23.000+0300').toDate());
 
         // Encounter Provider
-        expect(nodes[1].control.value).toBe('person-provider-uuid');
-        expect(nodes[1].initialValue).toBe('person-provider-uuid');
+        expect(nodes[1].control.value).toBe('ef59ac9d-9cca-46c5-ab04-b4d708584e13');
+        expect(nodes[1].initialValue).toBe('ef59ac9d-9cca-46c5-ab04-b4d708584e13');
 
         // Encounter Location
         expect(nodes[2].control.value).toBe('18c343eb-b353-462a-9139-b16606e6b6c2');
         expect(nodes[2].initialValue).toBe('18c343eb-b353-462a-9139-b16606e6b6c2');
+
+        // Check that it populated obs
+        let node = form.searchNodeByQuestionId('onArt');
+        expect(node[0].control.value !== '').toBe(true);
+
+        // Check that it populated orders
+        expect(adapter.ordersAdapter.formOrderNodes[0].control.value[0]).toEqual({ order1: 'a8982474-1350-11df-a1f1-0026b9348838' });
+
     });
 
     it('should generate encounter payload', () => {
@@ -133,18 +145,15 @@ describe('Encounter Value Adapter:', () => {
                 uuid: '18c343eb-b353-462a-9139-b16606e6b6c2',
                 display: 'Location Test'
             },
-            obs: [],
-            orders: [],
+            obs: adultFormObs.obs,
+            orders: adultFormOrders.orders,
             patient: {
                 uuid: 'patient-uuid',
                 identifiers: []
             },
             provider: {
                 uuid: 'ef59ac9d-9cca-46c5-ab04-b4d708584e13',
-                display: 'Florida Jepngetich Kiplagat',
-                person: {
-                    uuid: 'person-provider-uuid'
-                }
+                display: 'Florida Jepngetich Kiplagat'
             },
             uuid: '3841e9e6-b6cb-4667-b495-89331c6a973a'
         };
@@ -158,6 +167,7 @@ describe('Encounter Value Adapter:', () => {
             encounterTypeUuid: 'encounterTypeUuid',
             formUuid: 'formUuid',
             encounterUuid: 'encounterUuid',
+            providerUuid: 'providerUuid',
             utcOffset: '+0300'
         };
 
@@ -176,6 +186,16 @@ describe('Encounter Value Adapter:', () => {
         // change location
         nodes[2].control.setValue('new-location-uuid');
 
+        // change obs
+        let node = form.searchNodeByQuestionId('onArt');
+        node[0].control.setValue('changed-obs');
+
+        // change orders
+        node = form.searchNodeByQuestionId('order1');
+        let createdNode = (node[0] as ArrayNode).createChildNode();
+        (createdNode.children['order1'] as LeafNode).control.setValue('new-order');
+
+
         // generate payload
         let payload = adapter.generateFormPayload(form);
 
@@ -189,6 +209,12 @@ describe('Encounter Value Adapter:', () => {
         expect(payload['encounterType']).toEqual('encounterTypeUuid');
         expect(payload['form']).toEqual('formUuid');
         expect(payload['uuid']).toEqual('encounterUuid');
+
+        // check that it generated obs payload
+        expect(payload['obs'].length > 0).toBe(true);
+
+        // check that it generated orders payload
+        expect(payload['orders'].length > 0).toBe(true);
     });
 
 });

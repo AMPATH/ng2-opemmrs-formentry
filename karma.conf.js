@@ -15,6 +15,9 @@ module.exports = function (config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
+
+    browserNoActivityTimeout: 60000,
+
     // list of files / patterns to load in the browser
     files: [
       { pattern: './karma-shim.js', watched: false }
@@ -61,7 +64,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: isTestWatch ? ['Chrome'] : ['PhantomJS'], 
+    browsers: isTestWatch ? ['Chrome'] : ['PhantomJS'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
