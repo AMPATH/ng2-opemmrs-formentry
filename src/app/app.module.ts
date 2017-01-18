@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 
 import { FormEntryModule } from './form-entry/form-entry.module';
 import { DateTimePickerModule } from './components/date-time-picker';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 // import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
@@ -16,7 +17,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     ReactiveFormsModule,
     FormsModule,
     FormEntryModule,
-    DateTimePickerModule
+    DateTimePickerModule,
+    DropDownsModule
   ],
   declarations: [
     AppComponent

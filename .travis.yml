@@ -1,16 +1,18 @@
 language: node_js
 node_js:
-  - "6"
-  - "node"
+- '6'
+- node
 services:
-  - docker
+- docker
 before_install:
-  - export CHROME_BIN=chromium-browser
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3
-  # Updating NPM to relevant version >= 3 on Node.JS LTS
-  - npm i -g npm@^3
+- export CHROME_BIN=chromium-browser
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
+- npm i -g npm@^3
 script:
-  - npm run test
+- npm run test
 sudo: required
+env:
+  global:
+    secure: wkkryHK0zqqlFp+6MIm9eKMT/T0T85JMadygUesTYN3d+Ol06vh1rsFR7RKTDbbVR38/U1jB+HK9vWqbGWe9DH12fxia7nVFoMv/RQbF89AjM1BnButHWBI6mbrd+F97g1I6N4+Nm6q4FvRQZrrh6I0xEGriqofLOKeSjGzD84BHv9q0cxkPLs6AMgiZqEi5fnRRzTdRENR3HuJQo9zEpXxd3i2p/rRMyEurl0tB9Dz2LVrwflAlIOoEEFmtBmXdjYDMb/eU0u0c6pQrwSrVcpLJ3ckuzfBDRfpXMnj7OGWp4VC6gjswrh9+ptVGAPKS/0aSPIT9XeoEWJhnRc20zuIbRUYC4Ichb1mOcQtuUgn8AjCxXWfNHuskNPDrDqXPaDwvX/9nbybvJlkAt/sNJlrA6umbRWUqQRyLHmECiuJYJxkTeAD+SYtKpWANoE/LzwJJwCv2pXYgomFnwJtEuXFToRpec8IMqLHEiTZuEtNdo3jRhDzp1lBFMtCsCmz1lKJEq7qlSoY6XO0oFiiplXZQg1TAsG7dVyjLptdGNBYi90GKQGX1Q+gfMzdZDpyFjIl0OqXbStBNSpDtcC9vYAfpbo1WoeXBjC8Yj/1GT1r0kgapE55ff/7Y1Ot8SqigBAyXNuz1vrBrhErvehPVfV4GETyrvVB9FDlgyo1lr+E=
