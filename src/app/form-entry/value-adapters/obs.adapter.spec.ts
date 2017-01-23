@@ -297,13 +297,13 @@ describe('Obs Value Adapter: ', () => {
             }));
     });
 
-    describe('getObsPayload', () => {
+    fdescribe('getObsPayload', () => {
         it('should exist',
             inject([ObsValueAdapter], (s: ObsValueAdapter) => {
                 let getObsPayload = spyOn(s, 'getObsPayload');
                 expect(getObsPayload).toBeTruthy();
             }));
-        it('it should return correct payload given an array of nodes with and without values set',
+        it('should return correct payload given an array of nodes with and without values set',
             inject([ObsValueAdapter, FormFactory],
                 (s: ObsValueAdapter, f: FormFactory) => {
                     // Traverse  to get all nodes
@@ -321,6 +321,8 @@ describe('Obs Value Adapter: ', () => {
                     creatineDate.control.setValue('2016-01-22T16:17:46.000+0300');
 
                     let payload = s.getObsPayload(questionNodes);
+                    console.log('expected ', payload);
+                    console.log('generated', generatedPayload);
                     expect(payload).toEqual(generatedPayload);
                 }));
     });
@@ -346,8 +348,8 @@ describe('Obs Value Adapter: ', () => {
                     expect(value['onArt']).toEqual('a899b35c-1350-11df-a1f1-0026b9348838');
                     expect(value['tbadhere']).toEqual({
                         tb_adherence: 'a8b0f882-1350-11df-a1f1-0026b9348838',
-                        adherenceTbTreatment: '',
-                        adherenceTbOther: ''
+                        adherenceTbTreatment: null,
+                        adherenceTbOther: null
                     });
 
                     // check complex values
