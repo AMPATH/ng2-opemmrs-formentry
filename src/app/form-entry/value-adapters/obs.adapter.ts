@@ -433,12 +433,14 @@ export class ObsValueAdapter implements ValueAdapter {
 
     processMultiSelect(concept, values) {
         let multiSelectObs = [];
-        for (let value of values) {
-            let obs = {
-                concept: concept,
-                value: value
-            };
-            multiSelectObs.push(obs);
+        if (values && values !== null) {
+            for (let value of values) {
+                let obs = {
+                    concept: concept,
+                    value: value
+                };
+                multiSelectObs.push(obs);
+            }
         }
         return multiSelectObs;
     }
