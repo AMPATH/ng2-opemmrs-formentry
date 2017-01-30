@@ -26,8 +26,8 @@ export class FormRendererComponent implements OnInit, AfterViewChecked, OnDestro
 
     @Input() node: NodeBase;
     @Input() parentGroup: AfeFormGroup;
-    showTime: boolean;
-    showWeeks: boolean;
+    showTime: boolean = false;
+    showWeeks: boolean = false;
     activeTab: number;
     $owlElement: any;
     dataSource: DataSource;
@@ -58,52 +58,53 @@ export class FormRendererComponent implements OnInit, AfterViewChecked, OnDestro
     setShowTimeAndWeeks() {
         if (this.node.question.extras && this.node.question.extras['questionOptions'] &&
             this.weeksOrTime(this.node.question.extras['questionOptions'])) {
-            this.showTime = this.node.question.extras['questionOptions']['showTime'];
+            this.showTime = this.node.question.extras['questionOptions']['showTime'] || false;
             this.showWeeks = this.node.question.extras['questionOptions']['showWeeks'];
+            console.log('Time', this.showTime);
         }
     }
     weeksOrTime(questionOptions) {
         return (this.node.question.extras['questionOptions']['showTime'] || this.node.question.extras['questionOptions']['showWeeks']);
     }
     ngAfterViewChecked(): void {
-        this.$owlElement = this.slick && this.slick.nativeElement ?
-            (<any>$(this.slick.nativeElement)).not('.slick-initialized').slick({
-                dots: false,
-                infinite: false,
-                speed: 300,
-                slidesToShow: 4,
-                slidesToScroll: 1,
-                focusOnSelect: true,
-                responsive: [
-                    {
-                        breakpoint: 1024,
-                        settings: {
-                            slidesToShow: 3,
-                            slidesToScroll: 3,
-                            infinite: true,
-                            dots: false
-                        }
-                    },
-                    {
-                        breakpoint: 600,
-                        settings: {
-                            slidesToShow: 2,
-                            slidesToScroll: 2
-                        }
-                    },
-                    {
-                        breakpoint: 480,
-                        settings: {
-                            slidesToShow: 1,
-                            slidesToScroll: 1
-                        }
-                    }
-                    // You can unslick at a given breakpoint now by adding:
-                    // settings: "unslick"
-                    // instead of a settings object
-                ]
-            }
-            ) : null;
+        // this.$owlElement = this.slick && this.slick.nativeElement ?
+        //     (<any>$(this.slick.nativeElement)).not('.slick-initialized').slick({
+        //         dots: false,
+        //         infinite: false,
+        //         speed: 300,
+        //         slidesToShow: 4,
+        //         slidesToScroll: 1,
+        //         focusOnSelect: true,
+        //         responsive: [
+        //             {
+        //                 breakpoint: 1024,
+        //                 settings: {
+        //                     slidesToShow: 3,
+        //                     slidesToScroll: 3,
+        //                     infinite: true,
+        //                     dots: false
+        //                 }
+        //             },
+        //             {
+        //                 breakpoint: 600,
+        //                 settings: {
+        //                     slidesToShow: 2,
+        //                     slidesToScroll: 2
+        //                 }
+        //             },
+        //             {
+        //                 breakpoint: 480,
+        //                 settings: {
+        //                     slidesToShow: 1,
+        //                     slidesToScroll: 1
+        //                 }
+        //             }
+        //             // You can unslick at a given breakpoint now by adding:
+        //             // settings: "unslick"
+        //             // instead of a settings object
+        //         ]
+        //     }
+        //     ) : null;
 
     }
     ngOnDestroy() {

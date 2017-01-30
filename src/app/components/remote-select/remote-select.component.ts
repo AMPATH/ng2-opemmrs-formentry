@@ -42,17 +42,19 @@ export class RemoteSelectComponent implements OnInit, ControlValueAccessor {
         if (this.dataSource) {
             this.searchText = value;
             this.notFoundMsg = 'Loading.........';
-            this.dataSource.searchOptions(value)
-                .subscribe((result) => {
-                    if (result.length > 0) {
-                        let existing = _.map(this.value, _.clone);
-                        let concat = existing.concat(result);
-                        this.items = _.uniqBy(concat, 'value');
-                    }
-                    this.notFoundMsg = '';
-                }, (error) => {
-                    this.notFoundMsg = 'Errored';
-                });
+            if (this.dataSource.searchOptions) {
+                this.dataSource.searchOptions(value)
+                    .subscribe((result) => {
+                        if (result.length > 0) {
+                            let existing = _.map(this.value, _.clone);
+                            let concat = existing.concat(result);
+                            this.items = _.uniqBy(concat, 'value');
+                        }
+                        this.notFoundMsg = '';
+                    }, (error) => {
+                        this.notFoundMsg = 'Errored';
+                    });
+            }
         }
     }
 
@@ -66,16 +68,18 @@ export class RemoteSelectComponent implements OnInit, ControlValueAccessor {
         if (value && value !== '') {
             if (this.dataSource) {
                 this.loading = true;
-                this.dataSource.resolveSelectedValue(value).subscribe((result: any) => {
-                    this.items = [result];
-                    setTimeout(() => {
-                        this.selectC.select(result.value);
-                        this.selectC.value = result.value;
+                if (this.dataSource.resolveSelectedValue) {
+                    this.dataSource.resolveSelectedValue(value).subscribe((result: any) => {
+                        this.items = [result];
+                        setTimeout(() => {
+                            this.selectC.select(result.value);
+                            this.selectC.value = result.value;
+                        });
+                        this.loading = false;
+                    }, (error) => {
+                        this.loading = false;
                     });
-                    this.loading = false;
-                }, (error) => {
-                    this.loading = false;
-                });
+                }
             }
         }
     }

@@ -7,7 +7,7 @@ import { ExpressionRunner, Runnable } from '../expression-runner/expression-runn
 import { AfeFormControl, AfeFormArray, AfeFormGroup } from '../../abstract-controls-extension/control-extensions';
 import { QuestionBase } from '../question-models/question-base';
 import { JsExpressionHelper } from '../helpers/js-expression-helper';
-import { Form} from './form';
+import { Form } from './form';
 
 @Injectable()
 export class HidersDisablersFactory {
@@ -52,13 +52,13 @@ export class HidersDisablersFactory {
 
     convertHideObjectToString(hide: any) {
 
-      if (hide.value instanceof Array) {
+        if (hide.value instanceof Array) {
 
-        let arrayStr: string = "'" + hide.value.join("','") + "'";
-        let exp = '!arrayContains([' + arrayStr + '],' + hide.field + ')';
-        return exp;
-      }
+            let arrayStr: string = `'` + hide.value.join(`,'`) + `'`;
+            let exp = '!arrayContains([' + arrayStr + '],' + hide.field + ')';
+            return exp;
+        }
 
-      return '';
+        return '';
     }
 }

@@ -24,6 +24,7 @@ import { EncounterAdapter, PersonAttribuAdapter, OrderValueAdapter, ObsValueAdap
 import { RemoteSelectModule } from '../components/remote-select/remote-select.module';
 import { DataSources } from './data-sources/data-sources';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { MdTabsModule } from '@angular/material';
 
 @NgModule({
     imports: [
@@ -32,6 +33,7 @@ import { Ng2PageScrollModule } from 'ng2-page-scroll';
         SelectModule,
         DateTimePickerModule,
         RemoteSelectModule,
+        MdTabsModule.forRoot(),
         Ng2PageScrollModule.forRoot()
     ],
     declarations: [
