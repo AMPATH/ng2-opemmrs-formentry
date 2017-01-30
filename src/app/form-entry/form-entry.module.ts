@@ -23,6 +23,8 @@ import { ControlRelationsFactory } from './form-factory/control-relations.factor
 import { EncounterAdapter, PersonAttribuAdapter, OrderValueAdapter, ObsValueAdapter } from './value-adapters';
 import { RemoteSelectModule } from '../components/remote-select/remote-select.module';
 import { DataSources } from './data-sources/data-sources';
+import { MdTabsModule } from '@angular/material';
+
 
 @NgModule({
     imports: [
@@ -30,7 +32,8 @@ import { DataSources } from './data-sources/data-sources';
         ReactiveFormsModule,
         SelectModule,
         DateTimePickerModule,
-        RemoteSelectModule
+        RemoteSelectModule,
+        MdTabsModule.forRoot()
     ],
     declarations: [
         FormRendererComponent,

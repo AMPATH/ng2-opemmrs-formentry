@@ -5,23 +5,24 @@ import { AppComponent } from './app.component';
 import { FormEntryModule } from './form-entry/form-entry.module';
 // import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { MdTabsModule } from '@angular/material';
 @NgModule({
   imports: [
     BrowserModule,
     HttpModule,
     ReactiveFormsModule,
     FormsModule,
-    FormEntryModule
+    FormEntryModule,
+    MdTabsModule.forRoot()
     // Note: do not import any module needed by form-entry!!!
-     // instead import it in {{ src/app/form-entry/form-entry.module.ts}}
+    // instead import it in {{ src/app/form-entry/form-entry.module.ts}}
   ],
   declarations: [
     AppComponent
   ],
   providers: [
-     // please do not import any form-entry service here!!!
-     // instead import it in {{ src/app/form-entry/form-entry.module.ts}}
+    // please do not import any form-entry service here!!!
+    // instead import it in {{ src/app/form-entry/form-entry.module.ts}}
   ],
   bootstrap: [AppComponent]
 })

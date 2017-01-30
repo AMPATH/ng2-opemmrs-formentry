@@ -63,9 +63,7 @@
     ],
     "quotemark": [
       true,
-      "single",
-      "jsx-double",
-      "avoid-escape"
+      "single"
     ],
     "radix": true,
     "semicolon": [
@@ -118,10 +116,6 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true,
-    "pipe-naming": [
-      true,
-      "camelCase"
-    ]
+    "directive-class-suffix": true
   }
 }
