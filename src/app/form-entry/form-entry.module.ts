@@ -23,8 +23,8 @@ import { ControlRelationsFactory } from './form-factory/control-relations.factor
 import { EncounterAdapter, PersonAttribuAdapter, OrderValueAdapter, ObsValueAdapter } from './value-adapters';
 import { RemoteSelectModule } from '../components/remote-select/remote-select.module';
 import { DataSources } from './data-sources/data-sources';
-import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { MdTabsModule } from '@angular/material';
+
 
 @NgModule({
     imports: [
@@ -33,8 +33,7 @@ import { MdTabsModule } from '@angular/material';
         SelectModule,
         DateTimePickerModule,
         RemoteSelectModule,
-        MdTabsModule.forRoot(),
-        Ng2PageScrollModule.forRoot()
+        MdTabsModule.forRoot()
     ],
     declarations: [
         FormRendererComponent,
