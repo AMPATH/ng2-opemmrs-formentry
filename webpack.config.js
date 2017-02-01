@@ -97,7 +97,6 @@ module.exports = function makeWebpackConfig() {
   config.module = {
     preLoaders: isTest ? [] : [{ test: /\.ts$/, loader: 'tslint' }],
     loaders: [
-      { test: require.resolve("jquery"), loader: "expose?$!expose?jQuery" },
       // Support for .ts files.
       {
         test: /\.ts$/,
