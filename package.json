@@ -1,6 +1,6 @@
 {
   "name": "ng2-openmrs-formentry",
-  "version": "2.0.2-SNAPSHOT",
+  "version": "2.0.2",
   "description": "Provides a component for rendering openmrs forms. However it is generic enough for use outside openmrs",
   "repository": {
     "url": "https://github.com/AMPATH/ng2-opemmrs-formentry"
