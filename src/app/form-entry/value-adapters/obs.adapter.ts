@@ -31,6 +31,8 @@ export class ObsValueAdapter implements ValueAdapter {
 
     setValues(nodes, payload?, forcegroup?) {
         if (nodes) {
+
+            let index = 0;
             for (let node of nodes) {
                 if (node instanceof LeafNode) {
                     this.setObsValue(node, payload);
@@ -40,6 +42,7 @@ export class ObsValueAdapter implements ValueAdapter {
 
                 } else if (node.question && node.question.extras && node.question.renderingType === 'group' || forcegroup) {
                     let groupObs = _.find(payload, (o: any) => {
+
                         return o.concept.uuid === node.question.extras.questionOptions.concept && o.groupMembers;
                     });
                     if (groupObs) {
@@ -47,7 +50,17 @@ export class ObsValueAdapter implements ValueAdapter {
                             node.node['initialValue'] = groupObs;
                         }
 
-                        this.setValues(node.groupMembers, groupObs.groupMembers);
+                        if (groupObs.groupMembers.length > node.groupMembers.length) {
+
+                          if (groupObs.groupMembers[index]) {
+                            this.setValues(node.groupMembers, [groupObs.groupMembers[index]]);
+                          } else {
+                            this.setValues(node.groupMembers, groupObs.groupMembers);
+                          }
+
+                        } else {
+                            this.setValues(node.groupMembers, groupObs.groupMembers);
+                        }
                     }
                     if (forcegroup && node.payload) {
                         this.setValues(node.groupMembers, node.payload.groupMembers);
@@ -62,6 +75,8 @@ export class ObsValueAdapter implements ValueAdapter {
                 } else {
                     throw new Error('not implemented');
                 }
+
+                index++;
             }
         }
     }
@@ -151,12 +166,22 @@ export class ObsValueAdapter implements ValueAdapter {
             }
             return found && intersect;
         });
+
         if (groupRepeatingObs.length > 0) {
             node.node['initialValue'] = groupRepeatingObs;
-            for (let i = 0; i < groupRepeatingObs.length; i++) {
+            for (let child of groupRepeatingObs) {
+
+              if (child.groupMembers && child.groupMembers.length > 0) {
+
+                for (let i = 0; i < child.groupMembers.length; i++) {
+                  node.node.createChildNode();
+                }
+              } else {
                 node.node.createChildNode();
+              }
             }
         }
+
         let groups = [];
         let index = 0;
         for (let child of node.node.children) {
