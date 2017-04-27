@@ -2,11 +2,15 @@
   "compilerOptions": {
     "target": "ES5",
     "module": "commonjs",
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,
     "noEmitHelpers": true
   },
+  "files": [
+    "main.ts"
+  ],
   "exclude": [
     "node_modules",
     "bundles"
