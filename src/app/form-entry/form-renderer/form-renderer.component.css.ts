@@ -95,6 +95,40 @@ export const DEFAULT_STYLES = `a {
     .btn {
       padding: 0px 12px !important;
     }
+    
+    .appointments {
+      margin-top:12px;
+      font-size: 12px;
+      color: #999;
+    }
+    
+    .appointments p {
+      padding-top: 12px;
+    }
+    
+    .appointments th {
+      border-bottom: 0 !important;
+      color: #333;
+    }
+    
+    .appointments td span, .appointments th span {
+      display: block;
+    }
+    
+    .appointments td.active, .appointments th.active {
+      background-color: #3c8dbc;
+      color:#fff !important;
+      padding:0;
+    }
+    
+    .appointments td.active span, .appointments th.active span {
+      padding:4px;
+    }
+    
+    .appointments span.fa {
+      display: inline-block;
+      margin-right: 7px;
+    }
 
     ng-select.form-control {
       padding-top: 0;
