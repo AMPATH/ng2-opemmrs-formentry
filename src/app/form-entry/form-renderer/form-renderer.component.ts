@@ -6,12 +6,13 @@ import 'hammerjs';
 import { DEFAULT_STYLES } from './form-renderer.component.css';
 import { DOCUMENT } from '@angular/platform-browser';
 import { DataSources } from '../data-sources/data-sources';
-import { NodeBase } from '../form-factory/form-node';
+import { NodeBase, LeafNode } from '../form-factory/form-node';
 import { AfeFormGroup } from '../../abstract-controls-extension/afe-form-group';
 import { ValidationFactory } from '../form-factory/validation.factory';
 import { DataSource } from '../question-models/interfaces/data-source';
 import { FormErrorsService } from '../services';
 import { QuestionGroup } from '../question-models/group-question';
+import * as moment from 'moment';
 
 @Component({
   selector: 'form-renderer',
@@ -27,6 +28,12 @@ export class FormRendererComponent implements OnInit {
   showTime: boolean;
   showWeeks: boolean;
   activeTab: number;
+  showAppointments: boolean = false;
+  loadingAppointments: boolean = false;
+  errorLoadingAppointments: boolean = false;
+  appointmentsLoaded: boolean = false;
+  appointments: Array<any> = [];
+  today: string = '';
   dataSource: DataSource;
   public isCollapsed: boolean = false;
 
@@ -151,5 +158,67 @@ export class FormRendererComponent implements OnInit {
       });
 
     }, 200);
+  }
+
+  onDateChanged(node: LeafNode) {
+    this.resetProperties();
+    if (node.question.extras.questionOptions.concept
+      && (node.question.extras.questionOptions.concept === 'a8a666ba-1350-11df-a1f1-0026b9348838'
+      || node.question.extras.questionOptions.concept === 'a89d2398-1350-11df-a1f1-0026b9348838')) {
+      node.control.valueChanges.subscribe((v) => {
+        if (!this.showAppointments) {
+          this.loadingAppointments = true;
+          this.showAppointments = true;
+          let dataSource;
+          if (node.form && node.form.dataSourcesContainer.dataSources) {
+            dataSource = node.form.dataSourcesContainer.dataSources.monthlyScheduleResourceService;
+          }
+          let locationUuid = node.form.dataSourcesContainer.dataSources.userLocation.uuid;
+          if (dataSource && locationUuid) {
+            let startDate = moment(v).startOf('week').add(1, 'day').format('YYYY-MM-DD');
+            let endDate = moment(v).endOf('week').subtract(1, 'day').format('YYYY-MM-DD');
+            this.today = moment(v).format('DD-MM-YYYY');
+            // create 5 week days
+            let _data = [];
+            for (let i = 1; i <= 5; i++) {
+              _data.push({
+                date: moment(v).startOf('week').add(i, 'day').format('DD-MM-YYYY'),
+                count: 0
+              });
+            }
+            dataSource.getMonthlySchedule({
+              startDate: startDate,
+              endDate: endDate,
+              limit: 5,
+              locationUuids: locationUuid
+            }).subscribe((data) => {
+              this.appointmentsLoaded = true;
+              this.loadingAppointments = false;
+              _data.map((appointment, index) => {
+                appointment.count = data[index] !== undefined ? data[index].count.scheduled : 0;
+              });
+              this.appointments = _data;
+            }, (error) => {
+              this.loadingAppointments = false;
+              this.errorLoadingAppointments = true;
+              this.showAppointments = false;
+              console.error(error);
+            });
+          } else {
+            this.showAppointments = false;
+            this.errorLoadingAppointments = true;
+          }
+        }
+      });
+    }
+  }
+
+  resetProperties() {
+    this.loadingAppointments = false;
+    this.appointmentsLoaded = false;
+    this.errorLoadingAppointments = false;
+    this.showAppointments = false;
+    this.appointments = [];
+    this.today = '';
   }
 }
