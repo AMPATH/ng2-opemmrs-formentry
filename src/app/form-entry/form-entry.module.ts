@@ -25,10 +25,14 @@ import { FormSchemaCompiler } from './services/form-schema-compiler.service';
 import { FormFactory } from './form-factory/form.factory';
 import { QuestionFactory } from './form-factory/question.factory';
 import { ControlRelationsFactory } from './form-factory/control-relations.factory';
-import { EncounterAdapter, PersonAttribuAdapter, OrderValueAdapter, ObsValueAdapter, ObsAdapterHelper } from './value-adapters';
+import {
+    EncounterAdapter, PersonAttribuAdapter,
+    OrderValueAdapter, ObsValueAdapter
+} from './value-adapters';
 import { RemoteSelectModule } from '../components/remote-select/remote-select.module';
 import { DataSources } from './data-sources/data-sources';
-import { AppointmentsOverviewComponent
+import {
+    AppointmentsOverviewComponent
 } from '../components/appointments-overview/appointments-overview.component';
 
 
@@ -63,7 +67,6 @@ import { AppointmentsOverviewComponent
         QuestionFactory,
         ValidationFactory,
         ControlRelationsFactory,
-        ObsAdapterHelper,
         ObsValueAdapter,
         EncounterAdapter,
         PersonAttribuAdapter,
