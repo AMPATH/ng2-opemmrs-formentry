@@ -50,6 +50,7 @@
     "ng2-bootstrap": "^1.4.0",
     "ng2-page-scroll": "^4.0.0-beta.2",
     "ng2-semantic-ui": "^0.4.7",
+    "ngx-file-uploader": "git+https://github.com/enyachoke/ngx-file-uploader.git#0.0.7",
     "reflect-metadata": "^0.1.9",
     "rxjs": "^5.0.3",
     "shelljs": "^0.7.6",
