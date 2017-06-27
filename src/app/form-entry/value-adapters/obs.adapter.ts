@@ -1,422 +1,560 @@
-import { Injectable } from '@angular/core';
-
 import * as _ from 'lodash';
+const moment = require('moment');
 
-import { LeafNode, GroupNode } from '../form-factory/form-node';
+import { NodeBase, ArrayNode, GroupNode, LeafNode } from '../form-factory/form-node';
 import { Form } from '../form-factory/form';
 import { ValueAdapter } from './value.adapter';
-import { ObsAdapterHelper } from './obs-adapter-helper';
 
-@Injectable()
 export class ObsValueAdapter implements ValueAdapter {
-
-    constructor(private helper: ObsAdapterHelper) { }
+    constructor() {
+    }
 
     generateFormPayload(form: Form) {
-        return this.helper.getObsNodePayload(form.rootNode);
-        // TODO: Get rid of the section below when the helper is stable.
-        // // Traverse  to get all nodes
-        // let pages = this.traverse(form.rootNode);
-        // // Extract actual question nodes
-        // let questionNodes = this.getQuestionNodes(pages);
-        // // Get obs Payload
-        // return this.getObsPayload(questionNodes);
+        return this.getObsNodePayload(form.rootNode);
     }
 
     populateForm(form: Form, payload) {
-        this.helper.setNodeValue(form.rootNode, payload);
-
-        // TODO: Get rid of the section below when the helper is stable.
-        // // Traverse  to get all nodes
-        // let pages = this.traverse(form.rootNode);
-        // // Extract actual question nodes
-        // let questionNodes = this.getQuestionNodes(pages);
-        // // Extract set obs
-        // this.setValues(questionNodes, payload);
+        this.setNodeValue(form.rootNode, payload);
     }
 
-    // TODO: Get rid of all the functions below as they will not be needed
-    // once the helper is stable
+    findObsAnswerToQuestion(node: NodeBase, obsArray: Array<any>): Array<any> {
+        let found = [];
 
-    setValues(nodes, payload?, forcegroup?) {
-        if (nodes) {
-            for (let node of nodes) {
-                if (node instanceof LeafNode) {
-                    this.setObsValue(node, payload);
-                    if (node.question.enableHistoricalValue && node.initialValue !== undefined) {
-                        node.question.setHistoricalValue(false);
-                    }
-
-                } else if (node.question && node.question.extras && node.question.renderingType === 'group' || forcegroup) {
-                    let groupObs = _.find(payload, (o: any) => {
-                        return o.concept.uuid === node.question.extras.questionOptions.concept && o.groupMembers;
-                    });
-                    if (groupObs) {
-                        if (node.node) {
-                            node.node['initialValue'] = groupObs;
-                        }
-
-                        this.setValues(node.groupMembers, groupObs.groupMembers);
-                    }
-                    if (forcegroup && node.payload) {
-                        this.setValues(node.groupMembers, node.payload.groupMembers);
-                    }
-
-
-                } else if (node instanceof GroupNode && node.question.extras.type === 'complex-obs') {
-                    this.setComplexObsValue(node, payload);
-                } else if (node.question && node.question.extras && node.question.renderingType === 'repeating' && !forcegroup) {
-                    this.setRepeatingGroupValues(node, payload);
-                    node.node.control.updateValueAndValidity();
-                } else {
-                    throw new Error('not implemented');
-                }
-            }
+        if (!this.isObsNode(node)) {
+            return found;
         }
+
+        if (node instanceof LeafNode ||
+            (node instanceof GroupNode &&
+                node.question.extras.type === 'complex-obs')) {
+            _.each(obsArray, (item) => {
+                if (item.concept &&
+                    item.concept.uuid === node.question.extras.questionOptions.concept) {
+                    found.push(item);
+                }
+            });
+
+            return found;
+        }
+
+        // At this point the node is either a group or a repeating node
+
+        let childQuestionsUuids = this.getChildQuestionsConceptUuids(node);
+        if (childQuestionsUuids.length > 0) {
+            _.each(obsArray, (obs) => {
+                if (obs.concept &&
+                    obs.concept.uuid === node.question.extras.questionOptions.concept &&
+                    Array.isArray(obs.groupMembers) &&
+                    this.isSubsetOf(childQuestionsUuids,
+                        this.getGroupMembersConceptUuids(obs))) {
+                    found.push(obs);
+                }
+            });
+        }
+
+        return found;
     }
 
-    setObsValue(node, payload) {
-        if (node.question && node.question.extras &&
+    getChildQuestionsConceptUuids(node: NodeBase): Array<string> {
+        let found = [];
+
+        if (node.question.extras && node.question.extras.questions) {
+            _.each(node.question.extras.questions, (question) => {
+                if (question.questionOptions &&
+                    question.questionOptions.concept) {
+                    found.push(question.questionOptions.concept);
+                }
+            });
+        }
+
+        return found;
+    }
+
+    getGroupMembersConceptUuids(obsWithGroupMembers): Array<string> {
+        let found = [];
+
+        if (Array.isArray(obsWithGroupMembers.groupMembers)) {
+            _.each(obsWithGroupMembers.groupMembers,
+                (member) => {
+                    found.push(member.concept.uuid);
+                });
+        }
+
+        return found;
+    }
+
+    isObsNode(node: NodeBase): boolean {
+        return node.question.extras &&
             (node.question.extras.type === 'obs' ||
-                (node.question.extras.type === 'complex-obs-child' &&
-                    node.question.extras.questionOptions.obsField === 'value')) &&
-            node.question.extras.questionOptions.rendering !== 'multiCheckbox') {
-            let obs = _.find(payload, (o: any) => {
-                return o.concept.uuid === node.question.extras.questionOptions.concept;
-            });
-            if (obs) {
-                if (obs.value instanceof Object) {
-                    node.control.setValue(obs.value.uuid);
-                    node.control.updateValueAndValidity();
-                } else {
-                    node.control.setValue(obs.value);
-                    node.control.updateValueAndValidity();
+                node.question.extras.type === 'obsGroup' ||
+                node.question.extras.type === 'complex-obs' ||
+                node.question.extras.type === 'complex-obs-child');
+    }
+
+    isSubsetOf(supersetArray: Array<any>, subsetArray: Array<any>): boolean {
+        if (subsetArray.length === 0 && supersetArray.length === 0) {
+            return true;
+        }
+        return subsetArray.every((element): boolean => {
+            return supersetArray.indexOf(element) >= 0;
+        });
+    }
+
+    setSimpleObsNodeValue(node: NodeBase, obs: Array<any>) {
+        if (node && obs.length > 0) {
+            let obsToUse = obs[0];
+
+            // set initial value
+            node.initialValue = obsToUse;
+
+            if (!this.isEmpty(obsToUse.value) && obsToUse.value.uuid) {
+                // answer to the obs is a concept, use uuid value
+                this.setNodeFormControlValue(node, obsToUse.value.uuid);
+            } else if (!this.isEmpty(obsToUse.value)) {
+                this.setNodeFormControlValue(node, obsToUse.value);
+            }
+        }
+    }
+
+    setMultiselectObsNodeValue(node: NodeBase, obs: Array<any>) {
+        if (node && obs.length > 0) {
+            node.initialValue = obs;
+
+            let obsUuids = [];
+            for (let m of obs) {
+                obsUuids.push(m.value.uuid);
+            }
+
+            this.setNodeFormControlValue(node, obsUuids);
+        }
+    }
+
+    setComplexObsNodeValue(node: NodeBase, obs: Array<any>) {
+        if (node && obs.length > 0) {
+            let valueField: LeafNode; // essential memmber
+            let dateField: LeafNode; // other member to be manipulated by user
+
+            let nodeAsGroup = (node as GroupNode);
+            // tslint:disable-next-line:forin
+            for (let o in nodeAsGroup.children) {
+                if ((nodeAsGroup.children[o] as LeafNode).question.extras.questionOptions.obsField === 'value') {
+                    valueField = nodeAsGroup.children[o];
                 }
-                node['initialValue'] = { obsUuid: obs.uuid, value: obs.value };
+
+                if ((nodeAsGroup.children[o] as LeafNode).question.extras.questionOptions.obsField === 'obsDatetime') {
+                    dateField = nodeAsGroup.children[o];
+                }
             }
-        } else {
-            let multiObs = _.filter(payload, (o: any) => {
-                return o.concept.uuid === node.question.extras.questionOptions.concept;
-            });
-            if (multiObs && multiObs.length > 0) {
-                node.control.setValue(this.getMultiselectValues(multiObs));
-                node.control.updateValueAndValidity();
-                node['initialValue'] = multiObs;
+
+            // set the obs value here
+            this.setNodeValue(valueField, obs);
+            node.initialValue = valueField.initialValue;
+
+            // set the date value here
+            dateField.initialValue = valueField.initialValue;
+            this.setNodeFormControlValue(dateField, valueField.initialValue.obsDatetime);
+        }
+    }
+
+    setGroupObsNodeValue(node: NodeBase, obs: Array<any>) {
+        if (node && obs.length > 0) {
+            let groupNode = node as GroupNode;
+            groupNode.initialValue = obs[0];
+            // tslint:disable-next-line:forin
+            for (let o in groupNode.children) {
+                this.setNodeValue(groupNode.children[o], obs[0].groupMembers);
             }
         }
     }
 
-    setComplexObsValue(node, payload) {
-        let valueField: any;
-        let dateField: any;
+    setRepeatingGroupObsNodeValue(node: NodeBase, obs: Array<any>) {
+        if (node && obs.length > 0) {
+            let arrayNode = node as ArrayNode;
+            arrayNode.initialValue = obs;
 
-        // tslint:disable-next-line:forin
-        for (let o in node.children) {
-            if ((node.children[o] as LeafNode).question.extras.questionOptions.obsField === 'value') {
-                valueField = node.children[o];
+            for (let i = 0; i < obs.length; i++) {
+                let createdNode = arrayNode.createChildNode();
+                this.setGroupObsNodeValue(createdNode, [obs[i]]);
             }
-
-            if ((node.children[o] as LeafNode).question.extras.questionOptions.obsField === 'obsDatetime') {
-                dateField = node.children[o];
-            }
-        }
-        // set the usual obs value
-        this.setObsValue(valueField, payload);
-
-        // set the obs date
-        let obs = _.find(payload, (o: any) => {
-            return o.concept.uuid === node.question.extras.questionOptions.concept;
-        });
-
-        if (obs) {
-            dateField['initialValue'] = { obsUuid: obs.uuid, value: obs.obsDatetime };
-            (dateField as LeafNode).control.setValue(obs.obsDatetime);
-            (dateField as LeafNode).control.updateValueAndValidity();
         }
     }
 
-    getMultiselectValues(multiObs) {
-        let values = [];
-        for (let m of multiObs) {
-            values.push(m.value.uuid);
+    setNodeValue(node: NodeBase, obs: Array<any>) {
+        switch (this.getObsNodeType(node)) {
+            case 'unknown':
+                if (node instanceof GroupNode) {
+                    let groupNode = node as GroupNode;
+                    // tslint:disable-next-line:forin
+                    for (let o in groupNode.children) {
+                        this.setNodeValue(groupNode.children[o], obs);
+                    }
+                    break;
+                }
+                if (node instanceof ArrayNode) {
+                    let arrayNode = node as ArrayNode;
+                    for (let i = 0; i < arrayNode.children.length; i++) {
+                        this.setNodeValue(arrayNode.children[i], obs);
+                    }
+                    break;
+                }
+                break;
+            case 'simple':
+                // search asnwering obs at this point
+                let answeringObs = this.findObsAnswerToQuestion(node, obs);
+
+                // set answer here
+                this.setSimpleObsNodeValue(node, answeringObs);
+                break;
+
+            case 'multiselect':
+                // search asnwering obs at this point
+                let multiselectObs = this.findObsAnswerToQuestion(node, obs);
+
+                // set answer here
+                this.setMultiselectObsNodeValue(node, multiselectObs);
+                break;
+
+
+            case 'complex':
+                // search asnwering obs at this point
+                let complexObs = this.findObsAnswerToQuestion(node, obs);
+
+                // set answer here
+                this.setComplexObsNodeValue(node, complexObs);
+                break;
+
+            case 'group':
+                let groupObs = this.findObsAnswerToQuestion(node, obs);
+
+                if (groupObs.length > 0) {
+                    this.setGroupObsNodeValue(node, groupObs);
+                }
+
+                break;
+            case 'repeatingGroup':
+                let repeatingGroupObs = this.findObsAnswerToQuestion(node, obs);
+
+                if (repeatingGroupObs.length > 0) {
+                    this.setRepeatingGroupObsNodeValue(node, repeatingGroupObs);
+                }
+
+                break;
+            default:
+                console.error('Unknown obs node', node);
+                break;
         }
-        return values;
     }
 
-    setRepeatingGroupValues(node, payload) {
-        let groupRepeatingObs = _.filter(payload, (o: any) => {
-            let found = o.concept.uuid === node.question.extras.questionOptions.concept;
-            let intersect = false;
-            if (found && o.groupMembers) {
-                let obs = o.groupMembers.map((a) => {
-                    return a.concept.uuid;
-                });
+    setNodeFormControlValue(node: NodeBase, value) {
+        node.control.setValue(value);
+        // TODO: Determine if we need this call
+        // node.control.updateValueAndValidity();
 
-                let schemaQuestions = node.question.questions.map((a) => {
-                    return a.extras.questionOptions.concept;
-                });
+        // TODO: Remove this hack and put it in appropriate place
+        if (node.question.enableHistoricalValue && node.initialValue !== undefined) {
+            node.question.setHistoricalValue(false);
+        }
+    }
 
-                intersect = (_.intersection(obs, schemaQuestions).length > 0);
+    getObsNodeType(node: NodeBase): string {
+        if (this.isObsNode(node)) {
+            if (node instanceof LeafNode &&
+                node.question.extras.questionOptions.rendering === 'multiCheckbox') {
+                return 'multiselect';
             }
-            return found && intersect;
-        });
-        if (groupRepeatingObs.length > 0) {
-            node.node['initialValue'] = groupRepeatingObs;
-            for (let i = 0; i < groupRepeatingObs.length; i++) {
-                node.node.createChildNode();
+
+            if (node instanceof LeafNode) {
+                return 'simple';
             }
-        }
-        let groups = [];
-        let index = 0;
-        for (let child of node.node.children) {
-            let children = Object.keys(child.children).map(function (key) { return child.children[key]; });
-            let groupPayload = groupRepeatingObs[index];
-            groups.push({ question: node.question, groupMembers: children, payload: groupPayload });
-            index++;
-        }
-        this.setValues(groups, groupRepeatingObs, true);
-    }
 
-    getQuestionNodes(pages) {
-        let merged = [];
-        let arrays = [];
-        for (let page of pages) {
-            for (let section of page.page) {
-                arrays.push(section.section);
+            if (node instanceof GroupNode &&
+                node.question.extras.type === 'complex-obs') {
+                return 'complex';
             }
+
+            if (node instanceof ArrayNode &&
+                node.question.extras.type === 'obsGroup' &&
+                node.question.extras.questionOptions.rendering === 'repeating') {
+                return 'repeatingGroup';
+            }
+
+            if (node instanceof GroupNode &&
+                node.question.extras.type === 'obsGroup') {
+                return 'group';
+            }
+
+            return 'unknownObs';
         }
-        return merged.concat.apply([], arrays);
+        return 'unknown';
     }
 
-    repeatingGroup(nodes) {
-        let toReturn = [];
-        for (let node of nodes) {
-            toReturn.push({ question: node.question, groupMembers: this.traverse(node) });
-        }
-        return toReturn;
-    }
-
-    processGroup(obs, obsPayload) {
-        if (obs.question && obs.question.extras && obs.question.extras.questionOptions.rendering === 'group') {
-            let members = _.filter(this.getObsPayload(obs.groupMembers), (o: any) => {
-                return o.value !== '';
-            });
-
-            let mappedMembers = members.map((a) => {
-                return a.voided;
-            });
-            if (members.length > 0 && mappedMembers.every(Boolean)) {
-                obsPayload.push({
-                    uuid: obs.node.initialValue.uuid,
+    // PAYLOAD GENERATION FUNCTIONS
+    getSimpleObsPayload(node: NodeBase): any {
+        // check for empty values first
+        if (this.isEmpty(node.control.value)) {
+            if (node.initialValue) {
+                // Handle case for existing voided obs
+                return {
+                    uuid: node.initialValue.uuid,
                     voided: true
-                });
-            } else if (members.length > 0) {
-                if (obs.node.initialValue) {
-                    obsPayload.push({
-                        uuid: obs.node.initialValue.uuid,
-                        groupMembers: members
-                    });
-                } else {
-                    obsPayload.push({
-                        concept: obs.question.extras.questionOptions.concept,
-                        groupMembers: members
-                    });
-                }
+                };
             }
+            return null;
         }
+
+        // check for exisiting, unchanged values
+        if (node.initialValue && !this.simpleNodeValueChanged(node)) {
+            return null;
+        }
+
+        // all numbers, text, concepts answers are handled in the same way
+        // no need for further formatting in this case
+        let obs: any = {
+            concept: node.question.extras.questionOptions.concept,
+            value: node.control.value
+        };
+
+        // handle date fields
+        if (node.question.extras.questionOptions.rendering === 'date') {
+            obs.value = this.toOpenMrsDateTimeString(node.control.value);
+        }
+
+        if (node.initialValue) {
+            // for existing cases, delete concept property, and add uuid
+            delete obs.concept;
+            obs.uuid = node.initialValue.uuid;
+        }
+
+        return obs;
     }
 
-    mapInitialGroup(group) {
-        let current = {};
-        for (let member of group.groupMembers) {
-            let value: any = '';
-            if (member.value instanceof Object) {
-                value = member.value.uuid;
-            } else if (member.value) {
-                value = member.value;
-            } else if (member.groupMembers && member.groupMembers.length > 0) {
-                current = this.mapInitialGroup(group);
-            }
-            current[member.concept.uuid + ':' + value] = value;
-        }
-        return current;
-    }
+    getComplexObsPayload(node: NodeBase) {
+        let valueField: LeafNode; // essential memmber
+        let dateField: LeafNode; // other member to be manipulated by user
 
-    mapModelGroup(node, value) {
-        let current = {};
-        for (let key in value) {
-            if (value.hasOwnProperty(key)) {
-                let groupQuestion: any = _.find(node.question.questions, { key: key });
-                let modelValue = value[key];
-                if (modelValue instanceof Object) {
-                } else if (modelValue !== '') {
-                    current[groupQuestion.extras.questionOptions.concept + ':'
-                        + modelValue] = modelValue;
-                }
-            }
-
-        }
-        return current;
-    }
-
-    processRepeatingGroups(node, obsPayload) {
-        let initialValues = [];
-        if (node.node.initialValue) {
-            for (let group of node.node.initialValue) {
-                initialValues.push({ uuid: group.uuid, value: this.mapInitialGroup(group) });
-            }
-        }
-        let repeatingModel = [];
-        for (let value of node.node.control.value) {
-            repeatingModel.push({ value: this.mapModelGroup(node, value) });
-        }
-        let deleted = this.leftOuterJoinArrays(initialValues, repeatingModel);
-        let newObs = this.leftOuterJoinArrays(repeatingModel, initialValues);
-        let groupConcept = node.question.extras.questionOptions.concept;
-        let newObsPayload = [];
-        if (deleted.length > 0) {
-            let deletedObs = this.createGroupDeletedObs(deleted);
-            for (let d of deletedObs) {
-                obsPayload.push(d);
-            }
-            if (newObs.length > 0) {
-                newObsPayload = this.createGroupNewObs(newObs, groupConcept);
-            }
-        } else {
-            newObsPayload = this.createGroupNewObs(newObs, groupConcept);
-        }
-
-        if (newObsPayload.length > 0) {
-            for (let p of newObsPayload) {
-                obsPayload.push(p);
-            }
-        }
-    }
-
-    leftOuterJoinArrays(first, second) {
-        let unique = first.filter(function (obj) {
-            return !second.some(function (obj2) {
-                return _.isEqual(obj.value, obj2.value);
-            });
-        });
-        return unique;
-    }
-
-    createGroupNewObs(payload, groupConcept) {
-        let newPayload = [];
-        for (let obs of payload) {
-            let groupPayload = [];
-            /* tslint:disable */
-            for (let key in obs.value) {
-                let concept = key.split(':')[0];
-                let value = key.split(':')[1];
-                groupPayload.push({ concept: concept, value: value });
-            }
-            newPayload.push({ concept: groupConcept, groupMembers: groupPayload })
-            /* tslint:enable */
-        }
-        return newPayload;
-    }
-
-    createGroupDeletedObs(payload) {
-        let deletedObs = [];
-        for (let d of payload) {
-            deletedObs.push({ uuid: d.uuid, voided: true });
-        }
-        return deletedObs;
-    }
-
-    getExactTime(datetime: string) {
-        return datetime.substring(0, 19).replace('T', ' ');
-    }
-
-    processObs(obs, obsPayload) {
-        if (obs.control && obs.question.extras) {
-            let obsValue = {
-                concept: obs.question.extras.questionOptions.concept,
-                value: (obs.question.extras.questionOptions.rendering === 'date' && !this.isEmpty(obs.control.value)) ?
-                    this.getExactTime(obs.control.value) : obs.control.value
-            };
-
-            if (obs.question.extras.questionOptions.rendering === 'multiCheckbox') {
-                let multis = this.processMultiSelect(obs.question.extras.questionOptions.concept, obs.control.value);
-                if (obs.initialValue) {
-                    let mappedInitial = obs.initialValue.map((a) => {
-                        return { uuid: a.uuid, value: { concept: a.concept.uuid, value: a.value.uuid } };
-                    });
-                    let mappedCurrent = multis.map((a) => {
-                        return { value: a };
-                    });
-                    let deletedObs = this.leftOuterJoinArrays(mappedInitial, mappedCurrent);
-                    let newObs = this.leftOuterJoinArrays(mappedCurrent, mappedInitial);
-                    this.processDeletedMultiSelectObs(deletedObs, obsPayload);
-                    this.processNewMultiSelectObs(newObs, obsPayload);
-                } else {
-                    this.processNewMultiSelectObs(multis, obsPayload);
-                }
-            } else {
-                if (obs.initialValue && obs.initialValue.value && obsValue) {
-                    this.updateOrVoidObs(obsValue, obs.initialValue, obsPayload);
-                } else if (obsValue.value !== '' && obsValue.value !== null) {
-                    obsPayload.push(obsValue);
-                }
-            }
-        }
-    }
-
-    processComplexObs(node, obsPayload) {
-        let valueField: any;
-        let dateField: any;
-
+        let nodeAsGroup = (node as GroupNode);
         // tslint:disable-next-line:forin
-        for (let o in node.children) {
-            if ((node.children[o] as LeafNode).question.extras.questionOptions.obsField === 'value') {
-                valueField = node.children[o];
+        for (let o in nodeAsGroup.children) {
+            if ((nodeAsGroup.children[o] as LeafNode).question.extras.questionOptions.obsField === 'value') {
+                valueField = nodeAsGroup.children[o];
             }
 
-            if ((node.children[o] as LeafNode).question.extras.questionOptions.obsField === 'obsDatetime') {
-                dateField = node.children[o];
+            if ((nodeAsGroup.children[o] as LeafNode).question.extras.questionOptions.obsField === 'obsDatetime') {
+                dateField = nodeAsGroup.children[o];
             }
         }
 
-        if (valueField) {
-            // process obs as usual
-            this.processObs(valueField, obsPayload);
+        let valuePayload = this.getObsNodePayload(valueField);
 
-            // obtain the last inserted obs and set the obsDatetime
-            let createdPayload = obsPayload.length > 0 ? obsPayload[obsPayload.length - 1] : undefined;
-            if (createdPayload &&
-                ((createdPayload.concept && createdPayload.concept === node.question.extras.questionOptions.concept) ||
-                    (valueField.initialValue && createdPayload.uuid === valueField.initialValue.obsUuid))) {
-                if (dateField.initialValue && dateField.control.value !== dateField.initialValue.value) {
-                    createdPayload.obsDatetime = dateField.control.value;
+        // set obs datetime for the generated payload
+        if (valuePayload.length > 0) {
+            valuePayload[0].obsDatetime = this.toOpenMrsDateTimeString(dateField.control.value);
+            return valuePayload[0];
+        } else if (valuePayload.length === 0 && node.initialValue) {
+            // determine if date changed
+            if (!this.areDatesEqual(node.initialValue.obsDatetime, dateField.control.value)) {
+                let payload: any = {
+                    uuid: node.initialValue.uuid,
+                };
+                payload.obsDatetime = this.toOpenMrsDateTimeString(dateField.control.value);
+                return payload;
+            }
+        }
+        return null;
+    }
+
+    getMultiselectObsPayload(node: NodeBase): Array<any> {
+        let payload: Array<any> = [];
+
+        let existingUuids = [];
+
+        // add voided obs i.e. deleted options
+        if (Array.isArray(node.initialValue)) {
+            _.each(node.initialValue, (item) => {
+                existingUuids.push(item.value.uuid);
+                if (Array.isArray(node.control.value)) {
+                    if (node.control.value.indexOf(item.value.uuid) < 0) {
+                        payload.push({
+                            uuid: item.uuid,
+                            voided: true
+                        });
+                    }
+                } else {
+                    // every value was deleted
+                    payload.push({
+                        uuid: item.uuid,
+                        voided: true
+                    });
                 }
+            });
+        }
+
+        // add new obs i.e they didn't exisit originally
+        if (Array.isArray(node.control.value)) {
+            _.each(node.control.value, (item) => {
+                if (existingUuids.indexOf(item) < 0) {
+                    payload.push({
+                        concept: node.question.extras.questionOptions.concept,
+                        value: item
+                    });
+                }
+            });
+        }
+
+        return payload;
+    }
+
+    getGroupPayload(node: NodeBase) {
+        let nodeAsGroup: GroupNode = node as GroupNode;
+
+        let childrenPayload = [];
+        _.each(nodeAsGroup.children, (child) => {
+            let payload = this.getObsNodePayload(child);
+            if (payload.length > 0) {
+                childrenPayload = childrenPayload.concat(payload);
             }
+        });
+
+        if (childrenPayload.length === 0) {
+            return null;
         }
+
+        let groupPayload: any = {
+            groupMembers: childrenPayload
+        };
+
+        if (nodeAsGroup.initialValue) {
+            groupPayload.uuid = nodeAsGroup.initialValue.uuid;
+
+        } else {
+            groupPayload.concept = nodeAsGroup.question.extras.questionOptions.concept;
+        }
+
+        return groupPayload;
     }
 
-    processDeletedMultiSelectObs(values, obsPayload) {
-        for (let value of values) {
-            obsPayload.push({ uuid: value.uuid, voided: true });
-        }
-    }
+    getRepeatingGroupPayload(node: NodeBase) {
+        let nodeAsArray: ArrayNode = node as ArrayNode;
 
-    processNewMultiSelectObs(values, obsPayload) {
-        for (let multi of values) {
-            if (multi.value instanceof Object) {
-                obsPayload.push(multi.value);
-            } else {
-                obsPayload.push(multi);
+        let childrenPayload = [];
+
+        let groupsUuidsAfterEditting = [];
+        _.each(nodeAsArray.children, (child) => {
+            let payload = this.getObsNodePayload(child);
+            if (payload.length > 0) {
+                childrenPayload = childrenPayload.concat(payload);
             }
+            if (child.initialValue && child.initialValue.uuid) {
+                groupsUuidsAfterEditting.push(child.initialValue.uuid);
+            }
+        });
+
+        // void deleted groups
+        // console.log('groupsUuidsAfterEditting', groupsUuidsAfterEditting);
+        if (nodeAsArray.initialValue && Array.isArray(nodeAsArray.initialValue)) {
+            _.each(nodeAsArray.initialValue, (obs) => {
+                if (groupsUuidsAfterEditting.indexOf(obs.uuid) < 0) {
+                    let voidedGroup = {
+                        uuid: obs.uuid,
+                        voided: true
+                    };
+                    childrenPayload.push(voidedGroup);
+                }
+            });
         }
+
+        if (childrenPayload.length <= 0) {
+            return null;
+        }
+        return childrenPayload;
+
     }
 
-    updateOrVoidObs(obsValue, initialValue, obsPayload) {
-        if (this.isEmpty(obsValue.value) && initialValue.value) {
-            obsPayload.push({ uuid: initialValue.obsUuid, voided: true });
-        } else if (!this.isEmpty(obsValue.value) && initialValue.value) {
-            obsPayload.push({ uuid: initialValue.obsUuid, value: obsValue.value });
+    getObsNodePayload(node: NodeBase): Array<any> {
+        let payload = [];
+
+        switch (this.getObsNodeType(node)) {
+            case 'unknown':
+                if (node instanceof GroupNode) {
+                    let groupNode = node as GroupNode;
+                    // tslint:disable-next-line:forin
+                    for (let o in groupNode.children) {
+                        let groupNodePayoad = this.getObsNodePayload(groupNode.children[o]);
+                        if (Array.isArray(groupNodePayoad) && groupNodePayoad.length > 0) {
+                            payload = payload.concat(groupNodePayoad);
+                        }
+                    }
+                    break;
+                }
+                if (node instanceof ArrayNode) {
+                    let arrayNode = node as ArrayNode;
+                    for (let i = 0; i < arrayNode.children.length; i++) {
+                        let arrayNodePayload = this.getObsNodePayload(arrayNode.children[i]);
+                        if (Array.isArray(arrayNodePayload) && arrayNodePayload.length > 0) {
+                            payload = payload.concat(arrayNodePayload);
+                        }
+                    }
+                    break;
+                }
+                break;
+            case 'simple':
+                let simpleObs = this.getSimpleObsPayload(node);
+                if (simpleObs !== null) {
+                    payload.push(simpleObs);
+                }
+                break;
+
+            case 'multiselect':
+                let multiselectObs = this.getMultiselectObsPayload(node);
+
+                if (Array.isArray(multiselectObs) && multiselectObs.length > 0) {
+                    payload = payload.concat(multiselectObs);
+                }
+                break;
+
+            case 'complex':
+                let complexObs = this.getComplexObsPayload(node);
+                if (complexObs !== null) {
+                    payload.push(complexObs);
+                }
+                break;
+
+            case 'group':
+                let groupedObs = this.getGroupPayload(node);
+                if (groupedObs && groupedObs !== null) {
+                    payload.push(groupedObs);
+                }
+                break;
+            case 'repeatingGroup':
+                let repeatingGroupedObs = this.getRepeatingGroupPayload(node);
+                if (Array.isArray(repeatingGroupedObs) && repeatingGroupedObs.length > 0) {
+                    payload = payload.concat(repeatingGroupedObs);
+                }
+                break;
+            default:
+                break;
         }
+
+        return payload;
+    }
+
+    simpleNodeValueChanged(node: NodeBase): boolean {
+        if (node.initialValue) {
+            if (node.initialValue.value && node.initialValue.value.uuid) {
+                // question whose answer is a concept
+                return node.control.value !== node.initialValue.value.uuid;
+            }
+
+            if (node.question.extras.questionOptions.rendering === 'date') {
+                return !this.areDatesEqual(node.control.value, node.initialValue.value);
+            }
+            return node.control.value !== node.initialValue.value;
+        }
+        return false;
+    }
+
+    areDatesEqual(date1, date2) {
+        return moment(date1).isSame(date2);
     }
 
     isEmpty(value): boolean {
@@ -431,84 +569,12 @@ export class ObsValueAdapter implements ValueAdapter {
         return false;
     }
 
-    traverse(o, type?) {
-        let questions = [];
-        if (o.children) {
-            if (o.children instanceof Array) {
-                let returned = this.repeatingGroup(o.children);
-                return returned;
-            }
-            if (o.children instanceof Object) {
-                for (let key in o.children) {
-                    if (o.children.hasOwnProperty(key)) {
-                        switch (o.children[key].question.renderingType) {
-                            case 'page':
-                                let page = this.traverse(o.children[key]);
-                                questions.push({ page: page });
-                                break;
-                            case 'section':
-                                let section = this.traverse(o.children[key]);
-                                questions.push({ section: section });
-                                break;
-                            case 'group':
-                                let qs = this.traverse(o.children[key]);
-                                questions.push({ node: o.children[key], question: o.children[key].question, groupMembers: qs });
-                                break;
-                            case 'repeating':
-                                let rep = this.repeatingGroup(o.children[key].children);
-                                questions.push({ node: o.children[key], question: o.children[key].question, groupMembers: rep });
-                                break;
-                            default:
-                                questions.push(o.children[key]);
-                                break;
-
-                        }
-                    }
-                }
-            }
-
+    toOpenMrsDateTimeString(datetime: string): string {
+        if (this.isEmpty(datetime)) {
+            return undefined;
         }
-        return questions;
+        let val = datetime.substring(0, 19).replace('T', ' ');
+        return this.isEmpty(val) ? undefined : val;
     }
 
-    processMultiSelect(concept, values) {
-        let multiSelectObs = [];
-        if (values && values !== null) {
-            for (let value of values) {
-                let obs = {
-                    concept: concept,
-                    value: value
-                };
-                multiSelectObs.push(obs);
-            }
-        }
-        return multiSelectObs;
-    }
-
-
-    isObs(node) {
-        return (node.question.extras.type === 'obs' ||
-            node.question.extras.type === 'obsGroup' ||
-            node.question.extras.type === 'complex-obs');
-    }
-
-    getObsPayload(nodes) {
-        let obsPayload = [];
-        for (let node of nodes) {
-            if (this.isObs(node)) {
-                if (node.groupMembers, node.question.extras.questionOptions.rendering === 'group') {
-
-                    this.processGroup(node, obsPayload);
-
-                } else if (node.groupMembers, node.question.extras.questionOptions.rendering === 'repeating') {
-                    this.processRepeatingGroups(node, obsPayload);
-                } else if (node instanceof GroupNode && (node as GroupNode).question.extras.type === 'complex-obs') {
-                    this.processComplexObs(node, obsPayload);
-                } else {
-                    this.processObs(node, obsPayload);
-                }
-            }
-        }
-        return obsPayload;
-    }
 }
