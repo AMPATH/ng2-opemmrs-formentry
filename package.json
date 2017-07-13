@@ -52,7 +52,6 @@
   },
   "peerDependencies": {
     "@angular/animations": "^4.0.0",
-    "@angular/cdk": "^2.0.0-beta.8",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -64,6 +63,7 @@
   },
   "dependencies": {
     "@angular/material": "^2.0.0-beta.1",
+    "@angular/cdk": "^2.0.0-beta.8",
     "@types/jasmine": "^2.5.41",
     "@types/lodash": "^4.14.50",
     "@types/node": "^7.0.18",
