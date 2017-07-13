@@ -84,7 +84,7 @@ import {
         }
     ],
     exports: [FormRendererComponent, AfeNgSelectComponent,
-        ErrorRendererComponent, BrowserAnimationsModule]
+        ErrorRendererComponent, BrowserAnimationsModule, DateTimePickerModule]
 })
 export class FormEntryModule {
 

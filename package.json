@@ -50,18 +50,20 @@
     "start": "npm run server",
     "start:hmr": "npm run server -- --hot"
   },
-  "dependencies": {
-    "@angular/animations": "4.0.0",
+  "peerDependencies": {
+    "@angular/animations": "^4.0.0",
     "@angular/cdk": "^2.0.0-beta.8",
-    "@angular/common": "4.0.0",
-    "@angular/compiler": "4.0.0",
-    "@angular/core": "4.0.0",
-    "@angular/forms": "4.0.0",
-    "@angular/http": "4.0.0",
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0"
+  },
+  "dependencies": {
     "@angular/material": "^2.0.0-beta.1",
-    "@angular/platform-browser": "4.0.0",
-    "@angular/platform-browser-dynamic": "4.0.0",
-    "@angular/router": "4.0.0",
     "@types/jasmine": "^2.5.41",
     "@types/lodash": "^4.14.50",
     "@types/node": "^7.0.18",
