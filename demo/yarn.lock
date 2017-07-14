@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@angular/animations@^4.2.6":
+"@angular/animations@^4.0.0":
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-4.2.6.tgz#9d9c80a119b0c03693cbd23bbaf728b1531fffc7"
   dependencies:

@@ -22,6 +22,7 @@
     "start": "concurrently --raw \"gulp copy-lib:watch\" \"webpack-dev-server --open --watch --config esm/webpack.config.js\""
   },
   "dependencies": {
+    "@angular/animations": "^4.0.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",

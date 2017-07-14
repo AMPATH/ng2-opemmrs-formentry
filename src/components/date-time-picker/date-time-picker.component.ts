@@ -4,7 +4,7 @@ import * as Moment from 'moment';
 
 @Component({
     selector: 'date-time-picker',
-    template: './date-time-picker.component.html',
+    templateUrl: './date-time-picker.component.html',
     styles: ['./date-time-picker.component.css'],
     providers: [
         {

@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, ResponseContentType, Headers } from '@angular/http';
 import { Subscriber } from 'rxjs/Subscriber';
 
