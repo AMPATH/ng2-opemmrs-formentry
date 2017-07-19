@@ -4812,7 +4812,14 @@
                         "label": "Echo"
                       }
                     ]
-                  }
+                  },
+                  "validators": [
+                    {
+                      "type": "js_expression",
+                      "failsWhenExpression": "(isEmpty(myValue) || !arrayContains(order1, 'a8982474-1350-11df-a1f1-0026b9348838'))",
+                      "message": "Viral load order is required."
+                    }
+                  ]
                 },
                 {
                   "label": "Test ordered: Other (specify):",

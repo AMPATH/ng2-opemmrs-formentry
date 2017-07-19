@@ -74,7 +74,15 @@ export class FormControlService {
 
     generateFormArray(question: QuestionBase, parentControl?: AfeFormGroup, form?: Form): AfeFormArray {
 
-        let formArray = new AfeFormArray([]);
+        let validators = this.validationFactory.getValidators(question, form);
+        let formArray: AfeFormArray;
+    
+        if (validators && validators.length > 0) {
+            formArray = new AfeFormArray([], validators[0]);
+        } else {
+            formArray = new AfeFormArray([]);
+        }
+
         formArray.uuid = question.key;
         this.wireHidersDisablers(question, formArray, form);
         if (parentControl instanceof AfeFormGroup) {
@@ -121,9 +129,9 @@ export class FormControlService {
             let helper: JsExpressionHelper = new JsExpressionHelper();
             let runner: ExpressionRunner = new ExpressionRunner();
             let runnable: Runnable = runner.getRunnable(question.calculateExpression
-              , control,
-              helper.helperFunctions,
-              dataSource);
+                , control,
+                helper.helperFunctions,
+                dataSource);
             // this functionality strictly assumes the calculateExpression function has been defined in the JsExpressionHelper class
             control.setCalculatorFn(runnable.run);
         }
