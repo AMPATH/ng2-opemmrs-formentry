@@ -21,8 +21,8 @@ export class DateTimePickerComponent implements OnInit, ControlValueAccessor {
     @Input() showWeeks: boolean = false;
     @Input() weeks: number[] = [2, 4, 6, 8, 12, 16, 24];
     @Output() onDateChange = new EventEmitter<any>();
-    private showDatePicker: boolean = false;
-    private showTimePicker: boolean = false;
+    public showDatePicker: boolean = false;
+    public showTimePicker: boolean = false;
     onChange: any = () => { };
     onTouched: any = () => { };
 
