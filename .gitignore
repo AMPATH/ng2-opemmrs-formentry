@@ -61,3 +61,8 @@ __build__/**
 !karma*.js
 !protractor.conf.js
 !webpack.config.js
+
+coverage/
+dist
+docs
+tmp
