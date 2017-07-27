@@ -14,7 +14,7 @@ declare let require: any;
 
 @Component({
     selector: 'time-picker',
-    template: './time-picker.component.html',
+    templateUrl: './time-picker.component.html',
     styles: ['./time-picker.component.css'],
 })
 
