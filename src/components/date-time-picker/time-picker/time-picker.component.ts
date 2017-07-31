@@ -15,7 +15,7 @@ declare let require: any;
 @Component({
     selector: 'time-picker',
     templateUrl: './time-picker.component.html',
-    styles: ['./time-picker.component.css'],
+    styleUrls: ['./time-picker.component.css'],
 })
 
 export class TimePickerComponent implements OnInit {

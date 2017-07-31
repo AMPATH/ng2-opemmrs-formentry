@@ -16,7 +16,7 @@ declare let require: any;
 @Component({
   selector: 'date-picker',
   templateUrl: './date-picker.component.html',
-  styles: ['./date-picker.component.css'],
+  styleUrls: ['./date-picker.component.css'],
 })
 
 export class DatePickerComponent implements OnInit {

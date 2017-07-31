@@ -5,7 +5,7 @@ import * as Moment from 'moment';
 @Component({
     selector: 'date-time-picker',
     templateUrl: './date-time-picker.component.html',
-    styles: ['./date-time-picker.component.css'],
+    styleUrls: ['./date-time-picker.component.css'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,

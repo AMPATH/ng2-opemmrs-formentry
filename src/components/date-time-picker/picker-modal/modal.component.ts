@@ -16,7 +16,7 @@ declare let require: any;
 @Component({
     selector: 'picker-modal',
     templateUrl: './modal.component.html',
-    styles: ['./modal.component.css'],
+    styleUrls: ['./modal.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     animations: [
     ],
