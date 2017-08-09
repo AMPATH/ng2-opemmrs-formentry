@@ -13,7 +13,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
  * Env
  * Get npm lifecycle event to identify the environment
  */
-var ENV = process.env.npm_lifecycle_event;
+var ENV = 'test';
 var isTestWatch = ENV === 'test-watch';
 var isTest = ENV === 'test' || isTestWatch;
 var isProd = ENV === 'build';
@@ -33,11 +33,9 @@ module.exports = function makeWebpackConfig() {
    */
   if (isProd) {
     config.devtool = 'source-map';
-  }
-  else if (isTest) {
+  } else if (isTest) {
     config.devtool = 'inline-source-map';
-  }
-  else {
+  } else {
     config.devtool = 'eval-source-map';
   }
 
@@ -45,7 +43,9 @@ module.exports = function makeWebpackConfig() {
    * Entry
    * Reference: http://webpack.github.io/docs/configuration.html#entry
    */
-  config.entry = isTest ? {} : {
+  config.entry = isTest ? function () {
+    return {}
+  } : {
     'polyfills': './src/polyfills.ts',
     'vendor': './src/vendor.ts',
     'app': './src/main.ts' // our angular app
@@ -88,8 +88,21 @@ module.exports = function makeWebpackConfig() {
       // Support for .ts files.
       {
         test: /\.ts$/,
-        loaders: ['awesome-typescript-loader?' + atlOptions, 'angular2-template-loader', '@angularclass/hmr-loader'],
-        exclude: [isTest ? /\.(e2e)\.ts$/ : /\.(spec|e2e)\.ts$/, /node_modules\/(?!(ng2-.+))/]
+        use: [
+          {
+            loader: 'awesome-typescript-loader',
+            options: {
+              configFileName: 'tsconfig.json'
+            }
+          },
+          {
+            loader: 'angular2-template-loader'
+          }
+        ],
+        exclude: [
+          /\.e2e\.ts$/,
+          /node_modules/
+        ]
       },
 
       // copy those assets to output
@@ -99,33 +112,28 @@ module.exports = function makeWebpackConfig() {
       },
 
       // Support for *.json files.
-      { test: /\.json$/, loader: 'json-loader' },
+      {
+        test: /\.json$/,
+        loader: 'json-loader'
+      },
 
-      // Support for CSS as raw text
-      // use 'null' loader in test mode (https://github.com/webpack/null-loader)
-      // all css in src/style will be bundled in an external css file
       {
         test: /\.css$/,
-        exclude: root('src', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: ['css-loader', 'postcss-loader'] })
+        use: ['to-string-loader', 'css-loader']
       },
-      // all css required in src/app files will be merged in js files
-      { test: /\.css$/, include: root('src', 'app'), loader: 'raw-loader!postcss-loader' },
 
-      // support for .scss files
-      // use 'null' loader in test mode (https://github.com/webpack/null-loader)
-      // all css in src/style will be bundled in an external css file
       {
-        test: /\.(scss|sass)$/,
-        exclude: root('src', 'app'),
-        loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: ['css-loader', 'postcss-loader', 'sass-loader'] })
+        test: /\.scss$/,
+        use: ['to-string-loader', 'css-loader', 'sass-loader']
       },
-      // all css required in src/app files will be merged in js files
-      { test: /\.(scss|sass)$/, exclude: root('src', 'style'), loader: 'raw-loader!postcss-loader!sass-loader' },
 
       // support for .html as raw text
       // todo: change the loader to something that adds a hash to images
-      { test: /\.html$/, loader: 'raw-loader', exclude: root('src', 'public') }
+      {
+        test: /\.html$/,
+        loader: 'raw-loader',
+        exclude: root('src', 'public')
+      }
     ]
   };
 
@@ -139,16 +147,6 @@ module.exports = function makeWebpackConfig() {
       exclude: [/\.spec\.ts$/, /\.e2e\.ts$/, /node_modules/]
     });
   }
-
-  if (!isTest || !isTestWatch) {
-    // tslint support
-    config.module.rules.push({
-      test: /\.ts$/,
-      enforce: 'pre',
-      loader: 'tslint-loader'
-    });
-  }
-
   /**
    * Plugins
    * Reference: http://webpack.github.io/docs/configuration.html#plugins
@@ -223,7 +221,10 @@ module.exports = function makeWebpackConfig() {
       // Extract css files
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({ filename: 'css/[name].[hash].css', disable: !isProd })
+      new ExtractTextPlugin({
+        filename: 'css/[name].[hash].css',
+        disable: !isProd
+      })
     );
   }
 
@@ -240,7 +241,12 @@ module.exports = function makeWebpackConfig() {
 
       // Reference: http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
       // Minify all javascript, switch loaders to minimizing mode
-      new webpack.optimize.UglifyJsPlugin({ sourceMap: true, mangle: { keep_fnames: true } }),
+      new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        mangle: {
+          keep_fnames: true
+        }
+      }),
 
       // Copy assets from the public folder
       // Reference: https://github.com/kevlened/copy-webpack-plugin

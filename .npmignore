@@ -31,7 +31,6 @@ node_modules
 #IntelliJ configuration files
 .idea
 
-dist
 dev
 docs
 lib
@@ -63,3 +62,33 @@ webpack.config.js
 .travis.yml
 .jshintrc
 .editorconfig
+
+# Node
+node_modules
+npm-debug.log
+
+# Yarn
+yarn-error.log
+
+# JetBrains
+.idea/
+
+# VS Code
+.vscode/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Mac
+.DS_Store
+
+# Temporary files
+coverage/
+demo/
+docs
+tmp
+
+# Library files
+src/
+
