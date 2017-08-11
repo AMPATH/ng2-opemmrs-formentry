@@ -61,7 +61,7 @@ __build__/**
 !karma*.js
 !protractor.conf.js
 !webpack.config.js
-
+!gulpfile.js
 coverage/
 dist
 docs
