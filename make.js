@@ -13,7 +13,8 @@ var config = {
   map: {
     typescript: './node_modules/typescript/lib/typescript.js',
     '@angular': './node_modules/@angular',
-    rxjs: './node_modules/rxjs'
+    rxjs: './node_modules/rxjs',
+    'angular2-cookie': '/node_modules/angular2-cookie'
   },
   paths: {
     '*': '*.js'
