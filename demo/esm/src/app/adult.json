@@ -170,6 +170,7 @@
         "isExpanded": "True",
         "questions": [{
             "label": "Visit date",
+            "questionInfo":"",
             "type": "encounterDatetime",
             "required": "true",
             "default": "",
@@ -184,6 +185,7 @@
           },
           {
             "type": "encounterProvider",
+            "questionInfo":"",
             "label": "Provider",
             "id": "provider",
             "required": "true",
@@ -194,6 +196,7 @@
           },
           {
             "type": "encounterLocation",
+            "questionInfo":"",
             "label": "Facility name (site/satellite clinic required):",
             "id": "location",
             "required": "true",
@@ -211,6 +214,7 @@
         "isExpanded": "true",
         "questions": [{
             "label": "File to upload",
+            "questionInfo":"",
             "type": "obs",
             "required": "",
             "default": "",
@@ -227,6 +231,7 @@
           },
           {
             "type": "obsGroup",
+            "questionInfo":"",
             "label": "Transfer in from other centre, detailed",
             "questionOptions": {
               "concept": "0f8b7f4e-1656-46b7-bc93-d1fe4f193f5d",
@@ -234,6 +239,7 @@
             },
             "questions": [{
                 "label": "Transfer in from other centre:",
+                "questionInfo":"",
                 "id": "transferIn",
                 "questionOptions": {
                   "rendering": "select",
@@ -254,6 +260,7 @@
               {
                 "type": "personAttribute",
                 "label": "If transfer in from other AMPATH clinic (specify):",
+                "questionInfo":"",
                 "id": "transfered_in_to_ampath",
                 "required": "false",
                 "default": "",
@@ -268,6 +275,7 @@
               {
                 "type": "obs",
                 "label": "If non-Ampath, specify:",
+                "questionInfo":"",
                 "id": "nonAmpathSpecify",
                 "questionOptions": {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -282,6 +290,7 @@
           },
           {
             "label": "Was this visit scheduled?",
+            "questionInfo":"",
             "id": "scheduledVisit",
             "questionOptions": {
               "rendering": "select",
@@ -305,6 +314,7 @@
           },
           {
             "label": "If Unscheduled, actual scheduled date",
+            "questionInfo":"",
             "id": "actualDate",
             "type": "obs",
             "required": {
@@ -336,6 +346,7 @@
           },
           {
             "label": "Patient covered by NHIF:",
+            "questionInfo":"",
             "questionOptions": {
               "rendering": "select",
               "concept": "a8b02524-1350-11df-a1f1-0026b9348838",
@@ -361,6 +372,7 @@
           "label": "Social History",
           "questions": [{
               "label": "Civil status:",
+              "questionInfo":"",
               "type": "obs",
               "questionOptions": {
                 "rendering": "select",
@@ -399,6 +411,7 @@
             },
             {
               "label": "Discordant couple:",
+              "questionInfo":"",
               "questionOptions": {
                 "answers": [{
                     "concept": "a899b35c-1350-11df-a1f1-0026b9348838",
@@ -429,6 +442,7 @@
           "label": "Prevention With Positives",
           "questions": [{
               "label": "Prevention with positives: At risk population:",
+              "questionInfo":"",
               "required": "true",
               "questionOptions": {
                 "rendering": "select",
@@ -464,6 +478,7 @@
             },
             {
               "label": "Prevention with positives: PWP services:",
+              "questionInfo":"",
               "required": "true",
               "questionOptions": {
                 "rendering": "select",
@@ -507,6 +522,7 @@
               "questions": [{
                 "label": "Was the patient hospitalized since last visit?",
                 "id": "wasHospitalized",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a898c56e-1350-11df-a1f1-0026b9348838",
                   "answers": [{
@@ -527,12 +543,14 @@
             {
               "type": "obsGroup",
               "label": "If yes reason for hospitalization:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a003a6-1350-11df-a1f1-0026b9348838",
                 "rendering": "repeating"
               },
               "questions": [{
                 "label": "Reason for hospitalization:",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
                   "rendering": "problem"
@@ -554,6 +572,7 @@
           "label": "Family Planning",
           "questions": [{
               "label": "On family planning:",
+              "questionInfo":"",
               "required": "true",
               "id": "onFamilyPlanning",
               "questionOptions": {
@@ -581,6 +600,7 @@
               },
               "questions": [{
                   "label": "Family planning method:",
+                  "questionInfo":"",
                   "id": "fpMethod",
                   "questionOptions": {
                     "concept": "a894b1cc-1350-11df-a1f1-0026b9348838",
@@ -644,6 +664,7 @@
                 {
                   "type": "obs",
                   "label": "Family planning: Other (specify)",
+                  "questionInfo":"",
                   "id": "otherfp",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -659,6 +680,7 @@
             {
               "type": "obs",
               "label": "Approximate start date (If FP is 3-year implant/5-year implant/Injectables/Vasectomy/IUD/Bilateral tubal ligation)",
+              "questionInfo":"",
               "id": "appStartDate",
               "historicalExpression": "_.isEmpty(HD.getObject('prevEnc').getValue('a89ae092-1350-11df-a1f1-0026b9348838')) ? undefined : HD.getObject('prevEnc').getValue('a89ae092-1350-11df-a1f1-0026b9348838')",
               "questionOptions": {
@@ -676,6 +698,7 @@
             },
             {
               "label": "If not on family planning, reason:",
+              "questionInfo":"",
               "required": "true",
               "id": "reasonNotOnFamilyPlanning",
               "questionOptions": {
@@ -715,6 +738,7 @@
           "label": "OB/Gyn History",
           "questions": [{
               "label": "Menstruation status:",
+              "questionInfo":"",
               "id": "menStatus",
               "questionOptions": {
                 "concept": "a8a185d2-1350-11df-a1f1-0026b9348838",
@@ -737,6 +761,7 @@
             },
             {
               "label": "LMP:",
+              "questionInfo":"",
               "id": "lastPeriod",
               "questionOptions": {
                 "concept": "a89ff758-1350-11df-a1f1-0026b9348838",
@@ -752,6 +777,7 @@
             },
             {
               "label": "Is the patient pregnant? (Fill out PMTCT Form)",
+              "questionInfo":"",
               "id": "preg",
               "questionOptions": {
                 "concept": "6b4f1d00-0a27-41dd-a299-fb7dc730819c",
@@ -774,6 +800,7 @@
             },
             {
               "label": "Delivered since last visit? (If yes, fill out pMTCT form)",
+              "questionInfo":"",
               "id": "lastDelivery",
               "questionOptions": {
                 "concept": "a89a94ca-1350-11df-a1f1-0026b9348838",
@@ -805,6 +832,7 @@
         "isExpanded": "true",
         "questions": [{
             "label": "Patient currently on ART:",
+            "questionInfo":"",
             "required": "true",
             "id": "onArt",
             "historicalExpression": "arrayContainsAny(['a89b7c50-1350-11df-a1f1-0026b9348838','a89b7ae8-1350-11df-a1f1-0026b9348838','a8a00220-1350-11df-a1f1-0026b9348838','a89b77aa-1350-11df-a1f1-0026b9348838'], HD.getObject('prevEnc').getValue('a89b75d4-1350-11df-a1f1-0026b9348838')) ? 'a899b35c-1350-11df-a1f1-0026b9348838' : HD.getObject('prevEnc').getValue('a89ae254-1350-11df-a1f1-0026b9348838')",
@@ -826,6 +854,7 @@
           },
           {
             "label": "Reason for use:",
+            "questionInfo":"",
             "id": "reasonUse",
             "type": "obs",
             "questionOptions": {
@@ -852,6 +881,7 @@
           },
           {
             "label": "If patient started ART since last visit, enter start date:",
+            "questionInfo":"",
             "id": "startDate",
             "questionOptions": {
               "concept": "a89d200a-1350-11df-a1f1-0026b9348838",
@@ -867,6 +897,7 @@
           },
           {
             "label": "Line of ART patient is taking:",
+            "questionInfo":"",
             "id": "current_arv_line",
             "historicalExpression": "!_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? undefined : HD.getObject('prevEnc').getValue('04616f5d-b961-4f41-bbd7-bcc0dd235577')",
             "questionOptions": {
@@ -898,6 +929,7 @@
           },
           {
             "label": "Patient's current ART regimen, adults:",
+            "questionInfo":"",
             "id": "current_art_regimen_adult",
             "historicalExpression": "_.isEmpty(HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')) ? HD.getObject('prevEnc').getValue('a8a08344-1350-11df-a1f1-0026b9348838.a899cf5e-1350-11df-a1f1-0026b9348838') : HD.getObject('prevEnc').getValue('a89b6a62-1350-11df-a1f1-0026b9348838')",
             "questionOptions": {
@@ -1008,6 +1040,7 @@
             },
             "questions": [{
                 "label": "Adherence on ART:",
+                "questionInfo":"",
                 "id": "artAdherence",
                 "questionOptions": {
                   "concept": "2c363a0e-7cf9-42cd-9778-1301b09c4484",
@@ -1038,6 +1071,7 @@
               },
               {
                 "label": "Adherence (ART) Reason for poor/fair:",
+                "questionInfo":"",
                 "id": "artReasonPoorFair",
                 "questionOptions": {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1104,6 +1138,7 @@
               },
               {
                 "label": "Adherence (ART): Other (specify):",
+                "questionInfo":"",
                 "type": "obs",
                 "questionOptions": {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -1126,6 +1161,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "PCP prophylaxis:",
+              "questionInfo":"",
               "id": "pcpProphylaxisCurrent",
               "historicalExpression": "HD.getObject('prevEnc').getValue('a899e282-1350-11df-a1f1-0026b9348838')",
               "questionOptions": {
@@ -1152,12 +1188,14 @@
             {
               "type": "obsGroup",
               "label": "PCP prophylaxis adherence:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "275eee16-c358-4f3a-ac16-e8f24659df87",
                 "rendering": "group"
               },
               "questions": [{
                   "label": "Patient's adherence on PCP prophylaxis:",
+                  "questionInfo":"",
                   "id": "pcpProphylaxisAdherence",
                   "questionOptions": {
                     "concept": "115c744a-cf54-469f-bd5f-820352ffe9be",
@@ -1188,6 +1226,7 @@
                 },
                 {
                   "label": "Adherence (PCP) reasons for poor/fair:",
+                  "questionInfo":"",
                   "id": "pcpAdherence",
                   "questionOptions": {
                     "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1254,6 +1293,7 @@
                 },
                 {
                   "label": "Adherence (PCP): Other (specify):",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                     "rendering": "text"
@@ -1274,6 +1314,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "Patient on TB prophylaxis",
+              "questionInfo":"",
               "type": "obs",
               "required": "true",
               "id": "onTbProphylaxis",
@@ -1299,6 +1340,7 @@
             },
             {
               "label": "Start date of TB Prophylaxis treatment:",
+              "questionInfo":"",
               "id": "TbProphTreatment",
               "questionOptions": {
                 "concept": "67785e82-c2f7-4417-8ada-cc8e85abbfc1",
@@ -1325,6 +1367,7 @@
             },
             {
               "label": "TB prophylaxis adherence",
+              "questionInfo":"",
               "type": "obsGroup",
               "questionOptions": {
                 "concept": "3a69cfcf-f129-4702-a8dd-d061d2a16b9d",
@@ -1332,6 +1375,7 @@
               },
               "questions": [{
                   "label": "Patient's adherence on TB prophylaxis:",
+                  "questionInfo":"",
                   "id": "q16c",
                   "questionOptions": {
                     "concept": "ebfdb93a-9292-4245-9a27-0faf49545720",
@@ -1362,6 +1406,7 @@
                 },
                 {
                   "label": "Adherence (TB Prophylaxis) reasons for poor/fair:",
+                  "questionInfo":"",
                   "id": "tbProphylaxisAdherence",
                   "questionOptions": {
                     "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1428,6 +1473,7 @@
                 },
                 {
                   "label": "Adherence (TB Prophylaxis): Other (specify):",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                     "rendering": "text"
@@ -1454,6 +1500,7 @@
             "id": "onTbTreatment",
             "required": "true",
             "label": "Is patient on TB treatment?",
+            "questionInfo":"",
             "historicalExpression": "HD.getObject('prevEnc').getValue('a8afcc82-1350-11df-a1f1-0026b9348838')",
             "questionOptions": {
               "concept": "a8afcc82-1350-11df-a1f1-0026b9348838",
@@ -1473,6 +1520,7 @@
           {
             "type": "obsGroup",
             "label": "Start date of TB treatment",
+            "questionInfo":"",
             "id": "groupStartDateTbTreatment",
             "questionOptions": {
               "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
@@ -1480,6 +1528,7 @@
             },
             "questions": [{
               "label": "Start date of TB treatment:",
+              "questionInfo":"",
               "id": "startDateOfTbTreatment",
               "historicalExpression": "HD.getObject('prevEnc').getValue('a8afdb8c-1350-11df-a1f1-0026b9348838.a899e5f2-1350-11df-a1f1-0026b9348838')",
               "questionOptions": {
@@ -1508,6 +1557,7 @@
           },
           {
             "label": "Tuberculosis treatment phase",
+            "questionInfo":"",
             "type": "obs",
             "id": "tbPhase",
             "questionOptions": {
@@ -1542,6 +1592,7 @@
           {
             "type": "obsGroup",
             "label": "Current TB regimen",
+            "questionInfo":"",
             "id": "tb_current_regimen_group",
             "questionOptions": {
               "concept": "a8afdb8c-1350-11df-a1f1-0026b9348838",
@@ -1549,6 +1600,7 @@
             },
             "questions": [{
                 "label": "Current TB regimen",
+                "questionInfo":"",
                 "type": "obs",
                 "id": "tb_current",
                 "questionOptions": {
@@ -1615,6 +1667,7 @@
               },
               {
                 "label": "tabs/day",
+                "questionInfo":"",
                 "id": "regimenTabsDay",
                 "questionOptions": {
                   "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
@@ -1634,6 +1687,7 @@
               },
               {
                 "label": "mg",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "max": "2000",
@@ -1652,6 +1706,7 @@
               },
               {
                 "label": "mg/day",
+                "questionInfo":"",
                 "id": "regimenMgDay",
                 "questionOptions": {
                   "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
@@ -1670,6 +1725,7 @@
               },
               {
                 "label": "tabs",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
                   "max": "180",
@@ -1688,6 +1744,7 @@
           },
           {
             "label": "TB treatment completion date",
+            "questionInfo":"",
             "type": "obs",
             "id": "tbComplDate",
             "questionOptions": {
@@ -1700,6 +1757,7 @@
           },
           {
             "label": "TB treatment defaulted year",
+            "questionInfo":"",
             "type": "obs",
             "id": "tbDefaultDate",
             "questionOptions": {
@@ -1712,6 +1770,7 @@
           },
           {
             "type": "obsGroup",
+            "questionInfo":"",
             "id": "tbadhere",
             "label": "Patient adherence to TB medications",
             "questionOptions": {
@@ -1720,6 +1779,7 @@
             },
             "questions": [{
                 "label": "Patient adherence to TB medications:",
+                "questionInfo":"",
                 "id": "tb_adherence",
                 "questionOptions": {
                   "concept": "479decbd-e964-41c3-9576-98b39089ebd3",
@@ -1750,6 +1810,7 @@
               },
               {
                 "label": "Adherence (TB Treatment) reasons for poor/fair:",
+                "questionInfo":"",
                 "id": "adherenceTbTreatment",
                 "questionOptions": {
                   "concept": "a89ebbc2-1350-11df-a1f1-0026b9348838",
@@ -1816,6 +1877,7 @@
               },
               {
                 "label": "Adherence (TB Treatment): Other (specify):",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "rendering": "text"
@@ -1839,6 +1901,7 @@
           "isExpanded": "true",
           "questions": [{
             "label": "Cryptococcus Tx:",
+            "questionInfo":"",
             "id": "cryptCurrent",
             "questionOptions": {
               "concept": "a899e516-1350-11df-a1f1-0026b9348838",
@@ -1861,6 +1924,7 @@
           "label": "Other Medications",
           "questions": [{
             "label": "Please add any other medications the patient is taking",
+            "questionInfo":"",
             "type": "obsGroup",
             "questionOptions": {
               "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
@@ -1868,6 +1932,7 @@
             },
             "questions": [{
               "label": "Other drugs:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
                 "rendering": "drug"
@@ -1886,6 +1951,7 @@
         "questions": [{
             "type": "obsGroup",
             "label": "Side effects",
+            "questionInfo":"",
             "id": "sideEff",
             "questionOptions": {
               "concept": "a8a072c8-1350-11df-a1f1-0026b9348838",
@@ -1893,6 +1959,7 @@
             },
             "questions": [{
               "label": "Any side effects attributable to any drug that the patient is currently taking:",
+              "questionInfo":"",
               "id": "currSideEffect",
               "questionOptions": {
                 "concept": "30fc0cea-b6c7-48cc-bbfb-4eb53170ce41",
@@ -1920,6 +1987,7 @@
             "label": "If yes drugs suspected to be causing side effects",
             "questions": [{
               "label": "Drug:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "1682a920-c93d-4aad-b9cb-4a2b2c41ff1a",
                 "rendering": "drug"
@@ -2104,6 +2172,7 @@
         "label": "Vital Signs",
         "questions": [{
             "label": "BP:Systolic:",
+            "questionInfo":"",
             "id": "syst",
             "questionOptions": {
               "rendering": "number",
@@ -2116,6 +2185,7 @@
           },
           {
             "label": "BP:Diastolic:",
+            "questionInfo":"",
             "id": "diastolic",
             "questionOptions": {
               "rendering": "number",
@@ -2128,6 +2198,7 @@
           },
           {
             "label": "Pulse(Rate/Min):",
+            "questionInfo":"",
             "questionOptions": {
               "rendering": "number",
               "concept": "a8a65f12-1350-11df-a1f1-0026b9348838",
@@ -2139,6 +2210,7 @@
           },
           {
             "label": "Temp(C):",
+            "questionInfo":"",
             "questionOptions": {
               "rendering": "number",
               "concept": "a8a65fee-1350-11df-a1f1-0026b9348838",
@@ -2150,6 +2222,7 @@
           },
           {
             "label": "Weight(Kg):",
+            "questionInfo":"",
             "id": "weight",
             "questionOptions": {
               "rendering": "number",
@@ -2162,6 +2235,7 @@
           },
           {
             "label": "Height(CM):",
+            "questionInfo":"",
             "id": "height",
             "historicalExpression": "HD.getObject('prevEnc').getValue('a8a6619c-1350-11df-a1f1-0026b9348838')",
             "questionOptions": {
@@ -2175,6 +2249,7 @@
           },
           {
             "label": "Sp02:",
+            "questionInfo":"",
             "questionOptions": {
               "rendering": "number",
               "concept": "a8a66354-1350-11df-a1f1-0026b9348838",
@@ -2186,6 +2261,7 @@
           },
           {
             "label": "BMI (Kg/M2):",
+            "questionInfo":"",
             "id": "bmi",
             "questionOptions": {
               "rendering": "number",
@@ -2201,6 +2277,7 @@
           },
           {
             "label": "MUAC:",
+            "questionInfo":"",
             "id": "muac",
             "questionOptions": {
               "rendering": "number",
@@ -2221,6 +2298,7 @@
         "isExpanded": "true",
         "questions": [{
           "label": "History of presenting illness:",
+          "questionInfo":"",
           "type": "obs",
           "id": "hpiText",
           "questionOptions": {
@@ -2242,8 +2320,10 @@
                 "rendering": "repeating"
               },
               "label": "Problem Added",
+              "questionInfo":"",
               "questions": [{
                 "label": "Problem added",
+                "questionInfo":"",
                 "id": "probAdded",
                 "questionOptions": {
                   "concept": "a8ae835e-1350-11df-a1f1-0026b9348838",
@@ -2260,9 +2340,11 @@
                 "rendering": "repeating"
               },
               "label": "Problem Resolved",
+              "questionInfo":"",
               "id": "probResolved",
               "questions": [{
                 "label": "Problem resolved",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8af4aa0-1350-11df-a1f1-0026b9348838",
                   "rendering": "problem"
@@ -2278,6 +2360,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "TB Symptoms:",
+              "questionInfo":"",
               "required": "false",
               "id": "tbSymptoms",
               "questionOptions": {
@@ -2338,6 +2421,7 @@
             },
             {
               "label": "TB Status:",
+              "questionInfo":"",
               "id": "tbstatus",
               "required": "true",
               "questionOptions": {
@@ -2370,6 +2454,7 @@
           "label": "STI",
           "questions": [{
             "label": "Do you have any of the following:",
+            "questionInfo":"",
             "questionOptions": {
               "concept": "a8b00562-1350-11df-a1f1-0026b9348838",
               "answers": [{
@@ -2396,6 +2481,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "If you are assigning a new WHO stage to patient today, select new WHO stage:",
+              "questionInfo":"",
               "type": "obs",
               "id": "adultWHOStage",
               "questionOptions": {
@@ -2423,6 +2509,7 @@
             },
             {
               "label": "Select criteria for new WHO stage:",
+              "questionInfo":"",
               "type": "obs",
               "questionOptions": {
                 "concept": "a8ae88a4-1350-11df-a1f1-0026b9348838",
@@ -2449,6 +2536,7 @@
           "questions": [{
               "type": "obs",
               "label": "Creatinine mmol/L:",
+              "questionInfo":"",
               "id": "creatinine_test",
               "questionOptions": {
                 "concept": "a897e450-1350-11df-a1f1-0026b9348838",
@@ -2476,6 +2564,7 @@
             {
               "type": "complex-obs",
               "label": "Creatinine:",
+              "questionInfo":"",
               "id": "complex_creatinine",
               "questionOptions": {
                 "concept": "a897e450-1350-11df-a1f1-0026b9348830",
@@ -2484,6 +2573,7 @@
               "questions": [{
                   "type": "complex-obs-child",
                   "label": "Creatinine mmol/L:",
+                  "questionInfo":"",
                   "id": "creat_test",
                   "questionOptions": {
                     "concept": "a897e450-1350-11df-a1f1-0026b9348830",
@@ -2497,6 +2587,7 @@
                 {
                   "type": "complex-obs-child",
                   "label": "Date of Creatinine mmol/L:",
+                  "questionInfo":"",
                   "id": "date_creat_test",
                   "questionOptions": {
                     "concept": "a897e450-1350-11df-a1f1-0026b9348830",
@@ -2522,6 +2613,7 @@
             {
               "type": "obs",
               "label": "SGPT(ALT):",
+              "questionInfo":"",
               "id": "sgptalt_test",
               "questionOptions": {
                 "concept": "a896ca48-1350-11df-a1f1-0026b9348838",
@@ -2549,6 +2641,7 @@
             {
               "type": "obs",
               "label": "AST:",
+              "questionInfo":"",
               "id": "ast_test",
               "questionOptions": {
                 "concept": "a896c8ae-1350-11df-a1f1-0026b9348838",
@@ -2579,6 +2672,7 @@
           "label": "CBC",
           "questions": [{
               "label": "Hgb g/dL",
+              "questionInfo":"",
               "id": "hgbgdl_test",
               "questionOptions": {
                 "concept": "a8908a16-1350-11df-a1f1-0026b9348838",
@@ -2606,6 +2700,7 @@
             },
             {
               "label": "WBC/mm3",
+              "questionInfo":"",
               "id": "testWBCmm",
               "questionOptions": {
                 "concept": "a896dea2-1350-11df-a1f1-0026b9348838",
@@ -2633,6 +2728,7 @@
             },
             {
               "label": "Platelets",
+              "questionInfo":"",
               "id": "platelets_test",
               "questionOptions": {
                 "concept": "a8970954-1350-11df-a1f1-0026b9348838",
@@ -2660,6 +2756,7 @@
             },
             {
               "label": "ALC/ mm3",
+              "questionInfo":"",
               "id": "alcmm_test",
               "questionOptions": {
                 "concept": "a898b20e-1350-11df-a1f1-0026b9348838",
@@ -2687,6 +2784,7 @@
             },
             {
               "label": "MCV",
+              "questionInfo":"",
               "id": "mcv_test",
               "questionOptions": {
                 "concept": "a898201e-1350-11df-a1f1-0026b9348838",
@@ -2718,6 +2816,7 @@
           "label": "CD4",
           "questions": [{
               "type": "obs",
+              "questionInfo":"",
               "id": "cd4_test",
               "questionOptions": {
                 "concept": "a8a8bb18-1350-11df-a1f1-0026b9348838",
@@ -2744,6 +2843,7 @@
             {
               "type": "obs",
               "label": "CD4 %:",
+              "questionInfo":"",
               "id": "cd4percent_test",
               "questionOptions": {
                 "rendering": "number",
@@ -2775,6 +2875,7 @@
           "questions": [{
             "type": "obs",
             "label": "Viral load:",
+            "questionInfo":"",
             "id": "viralLoad_test",
             "questionOptions": {
               "concept": "a8982474-1350-11df-a1f1-0026b9348838",
@@ -2804,6 +2905,7 @@
           "label": "TB Test",
           "questions": [{
               "label": "Sputum gene xpert MTB:",
+              "questionInfo":"",
               "id": "sputumgene_test",
               "questionOptions": {
                 "concept": "741517cf-8bac-4755-b289-8dd2a2df7962",
@@ -2846,6 +2948,7 @@
             },
             {
               "label": "Sputum AFB smear:",
+              "questionInfo":"",
               "id": "sputumafp_test",
               "questionOptions": {
                 "concept": "a8945d4e-1350-11df-a1f1-0026b9348838",
@@ -2900,6 +3003,7 @@
             },
             {
               "label": "Sputum culture:",
+              "questionInfo":"",
               "id": "sputumculture_test",
               "questionOptions": {
                 "concept": "a8a462a2-1350-11df-a1f1-0026b9348838",
@@ -2946,6 +3050,7 @@
             },
             {
               "label": "TST (Mantoux test) :",
+              "questionInfo":"",
               "id": "tst_test",
               "questionOptions": {
                 "concept": "a89d278a-1350-11df-a1f1-0026b9348838",
@@ -2988,6 +3093,7 @@
           "label": "Chest Xray",
           "questions": [{
             "label": "CXR code:",
+            "questionInfo":"",
             "id": "cxrcode_test",
             "questionOptions": {
               "concept": "a8908192-1350-11df-a1f1-0026b9348838",
@@ -3054,6 +3160,7 @@
         "isExpanded": "true",
         "questions": [{
           "label": "Please enter the assessment below:",
+          "questionInfo":"",
           "type": "obs",
           "id": "assNote",
           "required": "false",
@@ -3075,6 +3182,7 @@
               "required": "true",
               "id": "arvPlan",
               "label": "ART plan:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a89b75d4-1350-11df-a1f1-0026b9348838",
                 "answers": [{
@@ -3131,6 +3239,7 @@
             },
             {
               "label": "Reason to Start ART:",
+              "questionInfo":"",
               "id": "arvStartReason",
               "questionOptions": {
                 "concept": "a89b6ce2-1350-11df-a1f1-0026b9348838",
@@ -3184,6 +3293,7 @@
             {
               "type": "obsGroup",
               "label": "ART change reason",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a07688-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
@@ -3191,6 +3301,7 @@
               "questions": [{
                   "id": "arvChangeReason",
                   "label": "Reason for stopping/change/substitution/interruption:",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a89b7110-1350-11df-a1f1-0026b9348838",
                     "answers": [{
@@ -3273,6 +3384,7 @@
                 {
                   "id": "arvToxicityCause",
                   "label": "If toxicity, please provide cause:",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                     "answers": [{
@@ -3336,6 +3448,7 @@
                 },
                 {
                   "label": "If toxicity: Other (specify):",
+                  "questionInfo":"",
                   "id": "q24cToxOther",
                   "type": "obs",
                   "questionOptions": {
@@ -3368,6 +3481,7 @@
               },
               "questions": [{
                   "label": "Eligible for ART but not started:",
+                  "questionInfo":"",
                   "id": "artEligibleNotStarted",
                   "questionOptions": {
                     "concept": "a89d26cc-1350-11df-a1f1-0026b9348838",
@@ -3398,6 +3512,7 @@
                 },
                 {
                   "label": "Eligible for ART but not started: Other (specify):",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                     "rendering": "text"
@@ -3413,6 +3528,7 @@
             },
             {
               "label": "Plan treatment categories:",
+              "questionInfo":"",
               "type": "obs",
               "id": "planCate",
               "questionOptions": {
@@ -3438,6 +3554,7 @@
             },
             {
               "label": "ART regimen started, adult:",
+              "questionInfo":"",
               "id": "artStartedAdult",
               "questionOptions": {
                 "concept": "a89b6a62-1350-11df-a1f1-0026b9348838",
@@ -3553,6 +3670,7 @@
               "required": "true",
               "id": "pcpProphylaxisPlan",
               "label": "PCP prophylaxis plan:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a89b7e12-1350-11df-a1f1-0026b9348838",
                 "answers": [{
@@ -3594,12 +3712,14 @@
             {
               "type": "obsGroup",
               "label": "PCP prophylaxis change reason",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a07750-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
               },
               "questions": [{
                 "label": "If change/stop, reason:",
+                "questionInfo":"",
                 "id": "pcpProphylaxisChangeReason",
                 "questionOptions": {
                   "concept": "a89b7eee-1350-11df-a1f1-0026b9348838",
@@ -3634,6 +3754,7 @@
             {
               "id": "pcpToxicityCause",
               "label": "If toxicity, please provide cause:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
                 "answers": [{
@@ -3697,6 +3818,7 @@
             },
             {
               "label": "If toxicity, please provide cause: Other (specify):",
+              "questionInfo":"",
               "id": "q25OtherToxicity",
               "questionOptions": {
                 "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -3714,6 +3836,7 @@
             },
             {
               "label": "If Start/Change, regimen:",
+              "questionInfo":"",
               "id": "pcpPlanMedication",
               "questionOptions": {
                 "concept": "a89b82cc-1350-11df-a1f1-0026b9348838",
@@ -3745,6 +3868,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "TB prophylaxis plan:",
+              "questionInfo":"",
               "required": "true",
               "id": "tbpropplan",
               "questionOptions": {
@@ -3784,12 +3908,14 @@
             {
               "type": "obsGroup",
               "label": "stopping reason",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a0780e-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
               },
               "questions": [{
                   "label": "If stopping, reason:",
+                  "questionInfo":"",
                   "id": "tbpropreasonstop",
                   "questionOptions": {
                     "concept": "a89c1e12-1350-11df-a1f1-0026b9348838",
@@ -3820,6 +3946,7 @@
                 },
                 {
                   "label": "If toxicity, please provide cause:",
+                  "questionInfo":"",
                   "id": "toxCause",
                   "questionOptions": {
                     "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
@@ -3874,6 +4001,7 @@
                 },
                 {
                   "label": "If toxicity, please provide cause: Other (specify):",
+                  "questionInfo":"",
                   "id": "toxcauseOther",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -3894,6 +4022,7 @@
           "isExpanded": "true",
           "questions": [{
               "label": "TB Treatment Started, detailed",
+              "questionInfo":"",
               "type": "obsGroup",
               "questionOptions": {
                 "concept": "a89fe6f0-1350-11df-a1f1-0026b9348838",
@@ -3901,6 +4030,7 @@
               },
               "questions": [{
                 "label": "TB Treatment plan:",
+                "questionInfo":"",
                 "id": "tbTreatmentPlan",
                 "required": "true",
                 "questionOptions": {
@@ -3957,12 +4087,14 @@
             {
               "type": "obsGroup",
               "label": "TB Plan Change Reason",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a078cc-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
               },
               "questions": [{
                   "label": "26b.If plan is to stop/change/re-dose, reason:",
+                  "questionInfo":"",
                   "id": "tbPlanChangeReason",
                   "questionOptions": {
                     "concept": "a89c1fd4-1350-11df-a1f1-0026b9348838",
@@ -3999,6 +4131,7 @@
                 },
                 {
                   "label": "If toxicity, please provide cause:",
+                  "questionInfo":"",
                   "id": "tbToxicityCause",
                   "questionOptions": {
                     "concept": "a8a032fe-1350-11df-a1f1-0026b9348838",
@@ -4063,6 +4196,7 @@
                 },
                 {
                   "label": "If toxicity, please provide cause: Other (specify):",
+                  "questionInfo":"",
                   "type": "obs",
                   "id": "_26bToxicityOther",
                   "questionOptions": {
@@ -4086,6 +4220,7 @@
                 },
                 {
                   "label": "If re/starting, reason:",
+                  "questionInfo":"",
                   "id": "tbRestart",
                   "type": "obs",
                   "questionOptions": {
@@ -4133,12 +4268,14 @@
             {
               "type": "obsGroup",
               "label": "tbMedPickupSite",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "b55a6d42-3189-4d4c-97bf-772dfe17b887",
                 "rendering": "group"
               },
               "questions": [{
                   "label": "Site of TB meds pick-up:",
+                  "questionInfo":"",
                   "id": "tbMedPickupSite",
                   "questionOptions": {
                     "concept": "16db21cd-10cb-4c31-bb5a-b7619bfbea66",
@@ -4161,6 +4298,7 @@
                 },
                 {
                   "label": "Other Specify:",
+                  "questionInfo":"",
                   "id": "medspickOther",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
@@ -4176,6 +4314,7 @@
             },
             {
               "label": "TB Treatment Started, detailed",
+              "questionInfo":"",
               "type": "obsGroup",
               "questionOptions": {
                 "concept": "a89fe6f0-1350-11df-a1f1-0026b9348838",
@@ -4183,6 +4322,7 @@
               },
               "questions": [{
                   "label": "TB regimen started",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a89c218c-1350-11df-a1f1-0026b9348838",
                     "answers": [{
@@ -4253,6 +4393,7 @@
                 },
                 {
                   "label": "tabs/day",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a07386-1350-11df-a1f1-0026b9348838",
                     "max": "30",
@@ -4271,6 +4412,7 @@
                 },
                 {
                   "label": "mg",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                     "max": "2000",
@@ -4289,6 +4431,7 @@
                 },
                 {
                   "label": "mg/day",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a0744e-1350-11df-a1f1-0026b9348838",
                     "max": "2000",
@@ -4306,6 +4449,7 @@
                 },
                 {
                   "label": "tabs",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
                     "max": "180",
@@ -4329,6 +4473,7 @@
           "isExpanded": "true",
           "questions": [{
             "label": "Cryptococcal treatment plan",
+            "questionInfo":"",
             "type": "obs",
             "questionOptions": {
               "concept": "a89c2790-1350-11df-a1f1-0026b9348838",
@@ -4367,12 +4512,14 @@
           "questions": [{
             "type": "obsGroup",
             "label": "Additional medication orders",
+            "questionInfo":"",
             "questionOptions": {
               "rendering": "repeating",
               "concept": "a8a0654e-1350-11df-a1f1-0026b9348838"
             },
             "questions": [{
                 "label": "Drug",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a060c6-1350-11df-a1f1-0026b9348838",
                   "rendering": "drug"
@@ -4382,6 +4529,7 @@
               },
               {
                 "label": "Frequency",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a06184-1350-11df-a1f1-0026b9348838",
                   "answers": [{
@@ -4420,6 +4568,7 @@
               },
               {
                 "label": "If tabs, number",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a0630a-1350-11df-a1f1-0026b9348838",
                   "rendering": "number"
@@ -4428,6 +4577,7 @@
               },
               {
                 "label": "If caps, number",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "ea404923-fe2b-4812-aec5-3be7fbe712f7",
                   "rendering": "number"
@@ -4436,6 +4586,7 @@
               },
               {
                 "label": "If mg, number",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a063c8-1350-11df-a1f1-0026b9348838",
                   "rendering": "number"
@@ -4444,6 +4595,7 @@
               },
               {
                 "label": "If ml, number",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a08286-1350-11df-a1f1-0026b9348838",
                   "rendering": "number"
@@ -4463,12 +4615,14 @@
           "questions": [{
             "type": "obsGroup",
             "label": "Test orders",
+            "questionInfo":"",
             "questionOptions": {
               "concept": "af46861e-597a-48a3-b3d4-a134d0b1c5fa",
               "rendering": "group"
             },
             "questions": [{
                 "label": "Tests Ordered",
+                "questionInfo":"",
                 "id": "order1",
                 "type": "testOrder",
                 "alert": {
@@ -4584,6 +4738,7 @@
               },
               {
                 "label": "Test ordered: Other (specify):",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                   "rendering": "text"
@@ -4593,6 +4748,7 @@
               },
               {
                 "label": "Viral load justification:",
+                "questionInfo":"",
                 "type": "obs",
                 "id": "vljust",
                 "questionOptions": {
@@ -4645,12 +4801,14 @@
           "questions": [{
               "type": "obsGroup",
               "label": "Referrals",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a07c8c-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
               },
               "questions": [{
                   "label": "Referrals made to the patient:",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a89c2344-1350-11df-a1f1-0026b9348838",
                     "answers": [{
@@ -4737,6 +4895,7 @@
                 },
                 {
                   "label": "Referrals made to the patient: Other (specify):",
+                  "questionInfo":"",
                   "questionOptions": {
                     "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
                     "rendering": "text"
@@ -4748,6 +4907,7 @@
             },
             {
               "label": "If referred for hospitalization, choose location:",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a89c2420-1350-11df-a1f1-0026b9348838",
                 "answers": [{
@@ -4770,6 +4930,7 @@
             },
             {
               "label": "Reason  for hospitalization",
+              "questionInfo":"",
               "type": "obsGroup",
               "questionOptions": {
                 "concept": "a8a07c8c-1350-11df-a1f1-0026b9348838",
@@ -4777,6 +4938,7 @@
               },
               "questions": [{
                 "label": "Reason for hospitalization:",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a8a07a48-1350-11df-a1f1-0026b9348838",
                   "rendering": "problem"
@@ -4787,12 +4949,14 @@
             {
               "type": "obsGroup",
               "label": "Transfer care to other centre",
+              "questionInfo":"",
               "questionOptions": {
                 "concept": "a8a170e2-1350-11df-a1f1-0026b9348838",
                 "rendering": "group"
               },
               "questions": [{
                 "label": "Transfer care to other centre:",
+                "questionInfo":"",
                 "questionOptions": {
                   "concept": "a89c2e5c-1350-11df-a1f1-0026b9348838",
                   "answers": [{
@@ -4816,6 +4980,7 @@
             },
             {
               "type": "personAttribute",
+              "questionInfo":"",
               "label": "Specify name of clinic to which patient is being referred:",
               "id": "transfered_out_to_ampath",
               "required": "false",
@@ -4832,6 +4997,7 @@
           "isExpanded": "true",
           "questions": [{
             "label": "Return to clinic Date:",
+            "questionInfo":"",
             "type": "obs",
             "id": "returnToClinic",
             "required": "true",
