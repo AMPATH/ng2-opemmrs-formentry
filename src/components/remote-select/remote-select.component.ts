@@ -87,7 +87,7 @@ export class RemoteSelectComponent implements OnInit, ControlValueAccessor {
 
     restoreSelectedValue(value, results) {
         let found = false;
-        _.each(results, (item) => {
+        _.each(results, (item: any) => {
             if (item.value === value) {
                 setTimeout(() => {
                     this.selectC.select(value);
