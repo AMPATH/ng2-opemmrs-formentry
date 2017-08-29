@@ -45,7 +45,7 @@ export class FormSchemaCompiler {
   private getPageInSchemaByLabel(schema: any, pageLabel: string): Object {
     if (_.isEmpty(schema) || _.isEmpty(pageLabel)) { return; }
     let foundPage: Object = {};
-    _.each(schema.pages, (page) => {
+    _.each(schema.pages, (page: any) => {
       if (page.label === pageLabel) {
         foundPage = page;
       }
@@ -60,7 +60,7 @@ export class FormSchemaCompiler {
     let foundPage: any = this.getPageInSchemaByLabel(schema, pageLabel);
     if (_.isEmpty(foundPage)) { return; }
     let foundSection: Object = {};
-    _.each(foundPage.sections, (section) => {
+    _.each(foundPage.sections, (section: any) => {
       if (section.label === sectionLabel) {
         foundSection = section;
       }

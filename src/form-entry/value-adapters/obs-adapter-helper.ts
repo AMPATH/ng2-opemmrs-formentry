@@ -50,7 +50,7 @@ export class ObsAdapterHelper {
         let found = [];
 
         if (node.question.extras && node.question.extras.questions) {
-            _.each(node.question.extras.questions, (question) => {
+            _.each(node.question.extras.questions, (question: any) => {
                 if (question.questionOptions &&
                     question.questionOptions.concept) {
                     found.push(question.questionOptions.concept);
@@ -66,7 +66,7 @@ export class ObsAdapterHelper {
 
         if (Array.isArray(obsWithGroupMembers.groupMembers)) {
             _.each(obsWithGroupMembers.groupMembers,
-                (member) => {
+                (member: any) => {
                     found.push(member.concept.uuid);
                 });
         }
@@ -399,7 +399,7 @@ export class ObsAdapterHelper {
         let nodeAsGroup: GroupNode = node as GroupNode;
 
         let childrenPayload = [];
-        _.each(nodeAsGroup.children, (child) => {
+        _.each(nodeAsGroup.children, (child: any) => {
             let payload = this.getObsNodePayload(child);
             if (payload.length > 0) {
                 childrenPayload = childrenPayload.concat(payload);
