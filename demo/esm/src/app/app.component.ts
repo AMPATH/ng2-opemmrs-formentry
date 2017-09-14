@@ -44,6 +44,7 @@ export class AppComponent {
         this.dataSources.registerDataSource('problem', { searchOptions: this.sampleSearch, resolveSelectedValue: this.sampleResolve });
         this.dataSources.registerDataSource('location', { searchOptions: this.sampleSearch, resolveSelectedValue: this.sampleResolve });
         this.dataSources.registerDataSource('provider', { searchOptions: this.sampleSearch, resolveSelectedValue: this.sampleResolve });
+        this.dataSources.registerDataSource('vlFormAlert', { needsVl: true }, true);
 
         let ds = {
             dataSourceOptions: { concept: undefined },
