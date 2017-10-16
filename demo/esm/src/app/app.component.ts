@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Http, ResponseContentType, Headers } from '@angular/http';
 import { Subscriber } from 'rxjs/Subscriber';
 
@@ -11,7 +11,7 @@ import { Observable, Subject } from 'rxjs/Rx';
 
 import { MockObs } from './mock/mock-obs';
 
-const adultForm = require('./adult');
+const adultForm = require('./sample');
 const adultFormObs = require('./mock/obs');
 const formOrdersPayload = require('./mock/orders');
 
@@ -123,21 +123,21 @@ export class AppComponent {
     }
 
     setUpCascadeSelectForWHOStaging() {
-        let subject = new Subject();
-        let source = this.dataSources.dataSources['conceptAnswers'];
-        source.dataFromSourceChanged = subject.asObservable();
+        // let subject = new Subject();
+        // let source = this.dataSources.dataSources['conceptAnswers'];
+        // source.dataFromSourceChanged = subject.asObservable();
 
-        let whoStageQuestion = this.form.searchNodeByQuestionId('adultWHOStage')[0];
-        whoStageQuestion.control.valueChanges.subscribe((val) => {
-            if (source.dataFromSourceChanged) {
-                console.log('changing value for WHO', val);
-                if (val === 'a89b2606-1350-11df-a1f1-0026b9348838') {
-                    subject.next([{ value: 3, label: 'Stage 3 Symptom' }, { value: 4, label: 'Stage 4 Symptom' }]);
-                } else {
-                    subject.next([{ value: 5, label: 'Stage 5 Symptom' }, { value: 6, label: 'Stage 6 Symptom' }]);
-                }
-            }
-        });
+        // let whoStageQuestion = this.form.searchNodeByQuestionId('adultWHOStage')[0];
+        // whoStageQuestion.control.valueChanges.subscribe((val) => {
+        //     if (source.dataFromSourceChanged) {
+        //         console.log('changing value for WHO', val);
+        //         if (val === 'a89b2606-1350-11df-a1f1-0026b9348838') {
+        //             subject.next([{ value: 3, label: 'Stage 3 Symptom' }, { value: 4, label: 'Stage 4 Symptom' }]);
+        //         } else {
+        //             subject.next([{ value: 5, label: 'Stage 5 Symptom' }, { value: 6, label: 'Stage 6 Symptom' }]);
+        //         }
+        //     }
+        // });
     }
 
     getSectionData(sectionId) {

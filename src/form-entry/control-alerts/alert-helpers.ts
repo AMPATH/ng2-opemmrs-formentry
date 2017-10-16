@@ -20,7 +20,7 @@ export class AlertHelper {
 
     public evaluateControlAlerts(control: CanGenerateAlert) {
         let messageValue = '';
-        control.alerts.forEach(message => {
+        control.alerts.forEach((message) => {
             message.reEvaluateAlertExpression();
             if (message.shown === true) {
                 messageValue = message.alertMessage;

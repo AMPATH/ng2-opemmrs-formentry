@@ -75,6 +75,7 @@ export class ControlRelationsFactory {
     }
   }
 
+
   createRelationsToArrayControls(node: GroupNode) {
 
     let form: Form = node.form;
@@ -273,7 +274,7 @@ export class ControlRelationsFactory {
         }
       }
 
-     if ( questionBase.alert && typeof questionBase.alert === 'object') {
+      if (questionBase.alert && typeof questionBase.alert === 'object') {
         hasRelation = true;
       }
 

@@ -9,8 +9,10 @@ import { HiderHelper } from '../form-entry/control-hiders-disablers/hider-helper
 import { DisablerHelper } from '../form-entry/control-hiders-disablers/disabler-helper';
 import { AlertHelper } from '../form-entry/control-alerts/alert-helpers';
 
-export class AfeFormGroup extends FormGroup implements CanHide, CanDisable , CanGenerateAlert {
+export class AfeFormGroup extends FormGroup implements CanHide, CanDisable, CanGenerateAlert {
     private _controlRelations: ControlRelations;
+    private _valueChangeListener: any;
+    private _previousValue;
 
     public uuid: string;
     public pathFromRoot: string;
@@ -32,6 +34,12 @@ export class AfeFormGroup extends FormGroup implements CanHide, CanDisable , Can
         this.hiders = [];
         this.disablers = [];
         this.alerts = [];
+        this.valueChanges.subscribe((value) => {
+            if (this._previousValue !== value) {
+                this.fireValueChangeListener(value);
+                this._previousValue = value;
+            }
+        });
     }
 
     get controlRelations(): ControlRelations {
@@ -83,8 +91,18 @@ export class AfeFormGroup extends FormGroup implements CanHide, CanDisable , Can
         this.AlertHelper.clearAlertsForControl(this);
     }
 
-     updateAlert() {
+    updateAlert() {
         this.AlertHelper.evaluateControlAlerts(this);
+    }
+
+    addValueChangeListener(func: any) {
+        this._valueChangeListener = func;
+    }
+
+    fireValueChangeListener(value: any) {
+        if (this._valueChangeListener && typeof this._valueChangeListener === 'function') {
+            this._valueChangeListener(value);
+        }
     }
 
 }
