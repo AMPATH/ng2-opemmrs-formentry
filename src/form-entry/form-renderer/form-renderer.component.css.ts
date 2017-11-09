@@ -13,7 +13,7 @@ export const DEFAULT_STYLES = `a {
 
     li {
       display: block;
-      padding: 10px 20px;
+      padding: 5px 20px !important;
       white-space: nowrap;
       transition: all 0.3s ease-in;
       border-bottom: 4px solid transparent;
@@ -131,8 +131,41 @@ export const DEFAULT_STYLES = `a {
           border-left-color: transparent;
  }
 
-    ng-select.form-control {
+  ng-select.form-control {
       padding-top: 0;
       height: auto;
       padding-bottom: 0;
-    }`;
+  }
+  .forms-dropdown.open{
+      position: static;
+  }
+  @media screen and (min-width: 640px) {
+      .forms-dropdown.open .forms-dropdown-menu {
+        width:50%;
+        left:50%;
+      }
+  }
+  @media screen and (max-width: 640px) {
+      .forms-dropdown.open .forms-dropdown-menu {
+        width: 100%;
+        left:0;
+      }
+  }
+  .forms-dropdown.open .forms-dropdown-menu {
+    display:table;
+    right:0;
+    text-align: center;
+    border-style: solid;
+    border-color: #ccc;
+  }
+ .forms-dropdown-menu>li {
+    display: inline-block;
+    border-bottom-style: solid;
+    width: 50%;
+    text-align: left;
+    float: left;
+}
+.forms-dropdown-menu>li:hover{
+  background:#CCC;
+}
+  `;
