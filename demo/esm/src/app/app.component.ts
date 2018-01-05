@@ -28,6 +28,8 @@ export class AppComponent {
   activeTab = 0;
   form: Form;
   stack = [];
+  encounterObject = adultFormObs;
+  showingEncounterViewer = false;
    public header: string = 'UMD Demo';
   constructor(private questionFactory: QuestionFactory,
               private formFactory: FormFactory, private obsValueAdapater: ObsValueAdapter,
@@ -37,7 +39,7 @@ export class AppComponent {
     this.schema = adultForm;
 
   }
-  ngOnInit() {
+  ngOnInit() {    
         this.dataSources.registerDataSource('drug', { searchOptions: this.sampleSearch, resolveSelectedValue: this.sampleResolve });
         this.dataSources.registerDataSource('personAttribute',
             { searchOptions: this.sampleSearch, resolveSelectedValue: this.sampleResolve });
@@ -212,5 +214,10 @@ export class AppComponent {
             this.form.showErrors = true;
             this.form.markInvalidControls(this.form.rootNode);
         }
+    }
+
+    public toggleEncounterViewer() {
+        this.showingEncounterViewer === true ?
+        this.showingEncounterViewer = false : this.showingEncounterViewer = true;
     }
 }
