@@ -2304,6 +2304,7 @@
           "questionOptions": {
             "concept": "a89ffbf4-1350-11df-a1f1-0026b9348838",
             "rendering": "textarea",
+            "placeholder": "Indicate here any history of illness from records",
             "rows": 15
           }
         }]
@@ -2541,6 +2542,7 @@
               "questionOptions": {
                 "concept": "a897e450-1350-11df-a1f1-0026b9348838",
                 "rendering": "number",
+                "placeholder": "Indicate here any history of illness from records",
                 "showDate": "true",
                 "max": "11050",
                 "min": "0",
@@ -3822,7 +3824,8 @@
               "id": "q25OtherToxicity",
               "questionOptions": {
                 "concept": "a8a06fc6-1350-11df-a1f1-0026b9348838",
-                "rendering": "text"
+                "rendering": "text",
+                "placeholder": "Indicate here any history of illness from records"
               },
               "type": "obs",
               "validators": [{
