@@ -10,6 +10,7 @@ import { AlertHelper } from '../form-entry/control-alerts/alert-helpers';
 import { DisablerHelper } from '../form-entry/control-hiders-disablers/disabler-helper';
 import { CanCalculate } from '../form-entry/control-calculators/can-calculate';
 import { ExpressionRunner } from '../form-entry/expression-runner/expression-runner';
+import * as _ from 'lodash';
 
 export class AfeFormControl extends FormControl implements CanHide, CanDisable, CanCalculate, CanGenerateAlert, ValueChangeListener {
     private _controlRelations: ControlRelations;
@@ -36,6 +37,18 @@ export class AfeFormControl extends FormControl implements CanHide, CanDisable, 
         this.alerts = [];
 
         this.valueChanges.subscribe((value) => {
+            if (Array.isArray(value)) {
+
+                if (Array.isArray(this._previousValue)) {
+                    if (!(_.isEqual(this._previousValue.sort(), value.sort()))) {
+                        this.fireValueChangeListener(value);
+                        this._previousValue = value;
+                    }
+                }else {
+                    this.fireValueChangeListener(value);
+                    this._previousValue = value;
+                }
+            }
           if (this._previousValue !== value) {
             this.fireValueChangeListener(value);
             this._previousValue = value;

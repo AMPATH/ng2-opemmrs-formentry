@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 
-import { AfeFormControl, AfeFormArray, AfeFormGroup, AfeControlType 
+import {
+    AfeFormControl, AfeFormArray, AfeFormGroup, AfeControlType
 } from '../../abstract-controls-extension/control-extensions';
 
 import { NestedQuestion } from '../question-models/interfaces/nested-questions';
@@ -79,12 +80,12 @@ export class FormControlService {
     generateFormArray(question: QuestionBase, parentControl?: AfeFormGroup, form?: Form): AfeFormArray {
 
         let validators = this.validationFactory.getValidators(question, form);
-         let formArray: AfeFormArray;
-         if (validators && validators.length > 0) {
-             formArray = new AfeFormArray([], validators[0]);
-         } else {
+        let formArray: AfeFormArray;
+        if (validators && validators.length > 0) {
+            formArray = new AfeFormArray([], validators[0]);
+        } else {
             formArray = new AfeFormArray([]);
-         }
+        }
         formArray.uuid = question.key;
         this.wireHidersDisablers(question, formArray, form);
         this.wireAlerts(question, formArray, form);
@@ -113,13 +114,27 @@ export class FormControlService {
         return control;
     }
 
+    public setChangelistener(control: AfeFormArray | AfeFormControl | AfeFormGroup) {
+        console.log('Setting change listener========>');
+        (control as AfeFormControl | AfeFormArray | AfeFormGroup )
+        .addValueChangeListener((value) => {
+            if (control.updateAlert) {
+                control.updateAlert();
+            }
+
+        });
+    }
     private wireAlerts(question: QuestionBase,
         control: AfeFormArray | AfeFormGroup | AfeFormControl, form?: Form) {
         if (question.alert && question.alert !== '') {
             let alert = this.alertsFactory.getJsExpressionshowAlert(question, control, form);
             control.setAlertFn(alert);
+            this.setChangelistener(control);
         }
     }
+
+   
+
     private wireHidersDisablers(question: QuestionBase,
         control: AfeFormArray | AfeFormGroup | AfeFormControl, form?: Form) {
         if (question.hide && question.hide !== '') {
