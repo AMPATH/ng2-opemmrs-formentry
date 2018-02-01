@@ -82,16 +82,18 @@ export class AppComponent {
                 return Observable.of({ image: 'https://unsplash.it/1040/720' });
             },
             fetchFile: (url) => {
+                console.log(url, 'APP COMPONENT');
                 return new Observable((observer: Subscriber<any>) => {
                     let objectUrl: string = null;
-                    let headers = new Headers({ 'Accept': 'image/png,image/jpeg,image/gif' });
+                    const headers = new Headers({ Accept: 'image/png,image/jpeg,image/gif' });
                     this.http
-                        .get(url, {
+                        .get('https://unsplash.it/1040/720', {
                             headers,
                             responseType: ResponseContentType.Blob
                         })
                         .subscribe(m => {
                             objectUrl = URL.createObjectURL(m.blob());
+                            console.log(objectUrl);
                             observer.next(objectUrl);
                         });
 
@@ -130,16 +132,19 @@ export class AppComponent {
         source.dataFromSourceChanged = subject.asObservable();
 
         let whoStageQuestion = this.form.searchNodeByQuestionId('adultWHOStage')[0];
-        whoStageQuestion.control.valueChanges.subscribe((val) => {
-            if (source.dataFromSourceChanged) {
-                console.log('changing value for WHO', val);
-                if (val === 'a89b2606-1350-11df-a1f1-0026b9348838') {
-                    subject.next([{ value: 3, label: 'Stage 3 Symptom' }, { value: 4, label: 'Stage 4 Symptom' }]);
-                } else {
-                    subject.next([{ value: 5, label: 'Stage 5 Symptom' }, { value: 6, label: 'Stage 6 Symptom' }]);
+        if(whoStageQuestion){
+            whoStageQuestion.control.valueChanges.subscribe((val) => {
+                if (source.dataFromSourceChanged) {
+                    console.log('changing value for WHO', val);
+                    if (val === 'a89b2606-1350-11df-a1f1-0026b9348838') {
+                        subject.next([{ value: 3, label: 'Stage 3 Symptom' }, { value: 4, label: 'Stage 4 Symptom' }]);
+                    } else {
+                        subject.next([{ value: 5, label: 'Stage 5 Symptom' }, { value: 6, label: 'Stage 6 Symptom' }]);
+                    }
                 }
-            }
-        });
+            });
+        }
+       
     }
 
     getSectionData(sectionId) {
