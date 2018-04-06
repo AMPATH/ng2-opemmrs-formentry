@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "es2015",
+    "target": "es6",
+    "module": "commonjs",
     "moduleResolution": "node",
     "noEmit": true,
     "declaration": false,
@@ -12,7 +12,7 @@
     "noImplicitAny": false,
     "skipLibCheck": true,
     "lib": [
-      "es2015",
+      "es6",
       "dom"
     ]
   },
