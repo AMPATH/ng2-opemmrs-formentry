@@ -136,10 +136,11 @@ export class DatePickerComponent implements OnInit {
 
   protected generateYears(): void {
     const currentYear = moment().year();
+    const nextYear = moment().add('year', 1).year();
     const startYr = this.calendarDate.clone().subtract(100, 'y').year();
     // const endYr = this.calendarDate.clone().add(10, 'y').year();
-    let years = [];
-    for (let year = startYr; year <= currentYear; year++) {
+    const years = [];
+    for (let year = startYr; year <= nextYear; year++) {
       years.push(year);
     }
 
