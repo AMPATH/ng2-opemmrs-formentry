@@ -251,7 +251,9 @@ export class ObsAdapterHelper {
         if (this.isObsNode(node)) {
             if (node instanceof LeafNode &&
                 ( node.question.extras.questionOptions.rendering === 'multiCheckbox' ||
-                node.question.extras.questionOptions.rendering === 'checkbox') ) {
+                node.question.extras.questionOptions.rendering === 'checkbox' ||
+                node.question.extras.questionOptions.rendering === 'multi-select'
+            ) ) {
                 return 'multiselect';
             }
 

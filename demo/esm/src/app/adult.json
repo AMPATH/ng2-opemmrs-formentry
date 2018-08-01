@@ -336,7 +336,7 @@
 										"label": "Atazanavir "
 									}
 								],
-								"rendering": "checkbox"
+								"rendering": "single-select"
 							},
 							"validators": [],
 							"hide": {
@@ -439,7 +439,7 @@
 										"label": "Other"
 									}
 								],
-								"rendering": "checkbox"
+								"rendering": "multi-select"
 							},
 							"validators": [],
 							"hide": {
